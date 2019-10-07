@@ -87,7 +87,6 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
 
     this.currentGridLocation = {row: 19, col: 0};
 
-    console.log(this.board.home)
 }
 
 Character.prototype.changeDirection = function(directions = DIRECTIONS){

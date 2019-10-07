@@ -110,27 +110,26 @@ class Game {
       //The Board
       // ctx.drawImage(this.tile, this.srcX, this.srcY, this.width, this.height, this.x, this.y, this.width*6, this.height*9)
       ctx.drawImage(this.boardImg, 0, 0, this.board.width, this.board.height, 0, 0, this.board.width, this.board.height)
-      ctx.drawImage(this.homeImg, 1100, 255);
+      //.drawImage(this.homeImg, 1100, 255);
 
         //Put Baddies on the board
         for (let i = 0; i < this.baddies.length; i++) {
           const baddy= this.baddies[i];
           //console.log(baddy);
-          baddy.draw(this)
+          //baddy.draw(this)
           
         }
         
         for (let t = 0; t < this.towers.length; t++) {
           const tower = this.towers[t];
           //console.log(baddy);
-          tower.run(this);
+          //tower.run(this);
           
         }
 
         for (let p = 0; p < this.projectiles.length; p++) {
           const projectile = this.projectiles[p];
-          //console.log(baddy);
-          projectile.run(this);
+          //projectile.run(this);
           
         }
 
@@ -138,8 +137,8 @@ class Game {
         //The Path Grid only shown for testing purposes
         for (let col = 0; col < this.gridCols; col++) {
             for (let row = 0; row < this.gridRows; row++) {
-                //console.log(col,row);
-                // this.grid[col][row].render();
+                //console.log(this.grid[col][row].id);
+                this.grid[col][row].render();
             }   
         }
 
@@ -323,6 +322,7 @@ class Game {
             for (let row = 0; row < this.gridRows; row++) {
                 //console.log(col,row);
                 this.grid[col][row].addNeighbors();
+                // console.log(this.grid[col][row].id)
             }   
         }
 
@@ -350,9 +350,9 @@ class Game {
 
         for (let col = 0; col < this.gridCols; col++) {
             for (let row = 0; row < this.gridRows; row++) {
-                //console.log(col,row);
-                if(!this.grid[col][row].wall){
-                    this.grid[col][row].getLeastNeighborPath();
+                let currentNode = this.grid[col][row];
+                if(!currentNode.wall && currentNode.walkingPath){
+                  currentNode.getLeastNeighborPath();
                 }
             }   
         }
