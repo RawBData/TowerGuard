@@ -9,7 +9,6 @@ const allBad=["Spider","Daemon","Scorpion"];
 const conjured=["Spider","Daemon","Scorpion","Skeleton","Slime","WaterElemental","FireElemental"];
 const working=["Daemon","Skeleton"]
 
-const GraphNodes = require('./graphNodes');
 
 function Character(characterName, health, game, startX = -10, startY = 250, speedMulty = 1) {
     //this.sheetname = 'Daemon.png'

@@ -1,8 +1,6 @@
 
 const Tower = require('./tower');
 const Character = require('./characters')
-const BoardTile = require('./board_tiles');
-const GraphNodes = require('./graphNodes');
 const GraphCell = require('./graph_cell');
 const Projectile = require('./projectile')
 
