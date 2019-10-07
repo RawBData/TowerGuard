@@ -58,6 +58,10 @@ class Game {
     this.currWave = 0;
     this.boardImg = new Image();
     this.boardImg.src = `../assets/sprites/game_board_01.png`;
+    //dynamic homebase 
+    this.homeImg = new Image();
+    this.homeImg.src = `../assets/sprites_towers/home_against_${baddiesType}.png`;
+    
     this.waveAmount = 5;
     this.baddiesType = baddiesType; 
     
@@ -88,12 +92,12 @@ class Game {
       throw "invalid context";
     }
 
-    this.generateNextWave();
-
     this.cellWidth = 30;
     this.gridCols = this.board.width/this.cellWidth;
     this.gridRows = this.board.height/this.cellWidth;
     this.createGrid();
+    this.generateNextWave();
+
   }
 
   
@@ -108,6 +112,7 @@ class Game {
       //The Board
       // ctx.drawImage(this.tile, this.srcX, this.srcY, this.width, this.height, this.x, this.y, this.width*6, this.height*9)
       ctx.drawImage(this.boardImg, 0, 0, this.board.width, this.board.height, 0, 0, this.board.width, this.board.height)
+      ctx.drawImage(this.homeImg, 1100, 255);
 
         //Put Baddies on the board
         for (let i = 0; i < this.baddies.length; i++) {
@@ -368,9 +373,9 @@ class Game {
 
   remove(objectType, item){
     if (objectType === "projectile"){
-
-    }else{
-      
+      this.projectiles.splice(this.projectiles.indexOf(item), 1);
+    }else if (objectType === "baddy"){
+      this.baddies.splice(this.baddies.indexOf(item), 1);
     }
   }
   

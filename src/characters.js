@@ -18,6 +18,7 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
     this.board = game;
     this.character = new Image();
     this.character.src = `../assets/sprites/${this.sheetname}.png`;
+    this.gridCell;
 
     this.x = startX;
     this.y = startY;
@@ -27,6 +28,7 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
 
     this.sheetWidth;// = 720;
     this.sheetHeight;// = 240;
+
 
     this.cols;// = 15;
     this.rows;// = 5;
@@ -86,7 +88,7 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
 
     this.currentGridLocation = {row: 19, col: 0};
 
-    // console.log(this.board)
+    console.log(this.board.home)
 }
 
 Character.prototype.changeDirection = function(directions = DIRECTIONS){
@@ -114,119 +116,6 @@ Character.prototype.setAnimationSheetInfo = function(){
     }
 }
 
-Character.prototype.atInflectionPoint = function(){
-    if (this.x < -15){
-        this.direction = "E";
-    }else if (this.x > 1155){
-        this.x = 1160
-        this.direction = "W";
-    }else if (this.y > 535){
-        this.direction = "N";
-    }else if (this.y < -29){
-        this.direction = "S";
-    }
-
-    // if (this.canChangeDirection){
-    //     inflectionX.forEach(inflY =>{
-    //         if (inflY-this.y<5){
-    //             inflectionX.forEach(inflX => {
-    //                 if (inflX-this.x<5){
-    //                     this.changeDirection();
-    //                     this.canChangeDirection = false;
-    //                     setTimeout(()=>{this.canChangeDirection = true}, 3000)
-    //                 }
-    //             });
-    //         }
-    //     });
-
-    // }
-
-    // const inflectionY = [-30,250,425,430,535];
-    // const inflectionX = [-15, 290, 355, 430, 490, 635, 780, 905, 980, 1050];
-
-    for (let i = 0; i < inflectionY.length; i++) {
-        const inflY = inflectionY[i];
-        if (Math.abs(inflY-this.y)<4){
-            switch (inflY) {
-                case -30:
-                    for (let j = 0; j < inflectionX.length; j++) {
-                        const inflX = inflectionX[j];
-                        if (Math.abs(inflX-this.y)<4){
-                            this.x = inflX;
-                            this.y = inflY;
-                            this.changeDirection(["S","E","W"]);
-                            this.canChangeDirection = false;
-                            setTimeout(()=>{this.canChangeDirection = true}, 3000)
-                        }
-                    }
-                    break
-                case 250:
-                        for (let j = 0; j < inflectionX.length; j++) {
-                            const inflX = inflectionX[j];
-                            if (Math.abs(inflX-this.x)<4){
-                                let directions;
-                                if (inflX === 355 || inflX === 1050 || inflX === 430){
-                                    directions = ["S","E","W"];
-                                }else if(inflX === 980){
-                                    directions = ["S","E","W","N"];
-                                }else{
-                                    directions = ["E","W","N"];
-                                }
-                                this.x = inflX;
-                                this.y = inflY;
-                                this.changeDirection(directions);
-                                this.canChangeDirection = false;
-                                setTimeout(()=>{this.canChangeDirection = true}, 3000)
-                            }
-                        }
-                    break;
-                case 425:
-                        for (let j = 0; j < inflectionX.length; j++) {
-                            const inflX = inflectionX[j];
-                            if (Math.abs(inflX-this.x)<4){
-                                this.x = inflX;
-                                this.y = inflY;
-                                this.changeDirection();
-                                this.canChangeDirection = false;
-                                setTimeout(()=>{this.canChangeDirection = true}, 3000)
-                            }
-                        }
-                    break;
-                case 430:
-                        for (let j = 0; j < inflectionX.length; j++) {
-                            const inflX = inflectionX[j];
-                            if (Math.abs(inflX-this.x)<4){
-                                this.x = inflX;
-                                this.y = inflY;
-                                this.changeDirection();
-                                this.canChangeDirection = false;
-                                setTimeout(()=>{this.canChangeDirection = true}, 3000)
-                            }
-                        }
-                    break;
-            
-                case 535:
-                    for (let j = 0; j < inflectionX.length; j++) {
-                        const inflX = inflectionX[j];
-                        if (Math.abs(inflX-this.x)<4){
-                            this.x = inflX;
-                            this.y = inflY;
-                            this.changeDirection();
-                            this.canChangeDirection = false;
-                            setTimeout(()=>{this.canChangeDirection = true}, 3000)
-                        }
-                    }
-                    break;
-                
-                default:
-                    break;
-            }
-        }
-        
-    }
-
-
-}
 
 Character.prototype.whichDirection = function(){
     if (this.x < -15){
@@ -242,6 +131,7 @@ Character.prototype.whichDirection = function(){
     this.currentGridLocation.col = Math.floor((this.x+30)/30);
     this.currentGridLocation.row = Math.floor((this.y+30)/30);
     let smallestNeighbor = this.board.grid[this.currentGridLocation.col][this.currentGridLocation.row].smallestNeighbor;
+
     if( this.currentGridLocation.col < smallestNeighbor.j){
         this.direction = "E";
     }else if(this.currentGridLocation.col > smallestNeighbor.j){
@@ -258,6 +148,7 @@ Character.prototype.whichDirection = function(){
 }
 
 Character.prototype.updateFrame = function(ctx) {
+    this.characterDead();
     this.whichDirection();
     this.currentFrame = ++this.currentFrame%this.rows;
     this.srcY = this.currentFrame * this.height;
@@ -302,6 +193,19 @@ Character.prototype.draw = function(game){
         ctx.restore();
     }else{
         ctx.drawImage(this.character, this.srcX, this.srcY, this.width, this.height, this.x, this.y, this.width*this.size, this.height*this.size)
+    }
+}
+
+Character.prototype.characterDead = function(){
+    let homeBase = {row: this.board.home.i, col: this.board.home.j};
+    let hRow = this.board.home.i;
+    let hCol = this.board.home.j;
+    let cRow = this.currentGridLocation.row;
+    let cCol = this.currentGridLocation.col;
+    //console.log(homeBase)
+    if ((hRow-cRow < 2 && hCol-cCol < 2)){
+        console.log("in removing character")
+        this.board.remove("baddy",this);
     }
 }
 

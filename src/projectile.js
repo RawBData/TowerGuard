@@ -5,6 +5,8 @@ let Projectile = function(location, enemyOrientationAngle, prjImg, velocity = 6,
     this.prjImg = prjImg;
     this.velocity = velocity;
     this.game = game;
+    console.log(this.location)
+    console.log(this.game);
 
 }
 
@@ -40,12 +42,21 @@ Projectile.prototype = {
     },
 
     isOutOfBounds:function(){
-        let height = this.game.height;
-        let width = this.game.width;
+        let height = this.game.ctx.canvas.height;
+        let width = this.game.ctx.canvas.width;
 
-        if (this.location.x < 0 || this.location.y < 0 || this.location.x > width || this.location.y > height) this.game.remove("projectile",this);
+        if (this.location.x < 0 || this.location.y < 0 || this.location.x > width || this.location.y > height){ 
+            this.game.remove("projectile",this)
+        };
     },
 
+    collideWith:function(otherObject) {
+        if (otherObject instanceof Character) {
+          otherObject.health -= 25;
+          return true;
+        }
+        return false;
+      },
 
 }
 
