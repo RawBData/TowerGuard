@@ -3,32 +3,77 @@
 const DIRECTIONS = ["N","S","E","W"]
 const inflectionY = [-30,250,425,430,535];
 const inflectionX = [-15, 290, 355, 430, 490, 635, 780, 905, 980, 1050];
+const humanUnits = ["Archer","Brigand","Catapult","Cleric","Conjurer","Peasant","Conjurer","Lothar"];
+const orcUnits = ["Necrolyte","Ogre","Grunt","Raider","Skeleton","Spearman","Medivh","Warlock","GaronaGriselda"];
+const allBad=["Spider","Daemon","Scorpion"];
+const conjured=["Spider","Daemon","Scorpion","Skeleton","Slime","WaterElemental","FireElemental"];
+const working=["Daemon","Skeleton"]
 
 const GraphNodes = require('./graphNodes');
 
-function Character(characterName, health, game) {
-    this.sheetname = 'Daemon.png'
-
+function Character(characterName, health, game, startX = -10, startY = 250, speedMulty = 1) {
+    //this.sheetname = 'Daemon.png'
+    this.sheetname = working[Math.floor(Math.random()*working.length)];
+    console.log(this.sheetname);
     this.board = game;
     this.character = new Image();
-    this.character.src = `../assets/sprites/${this.sheetname}`;
+    this.character.src = `../assets/sprites/${this.sheetname}.png`;
 
-    this.x = -14;
-    this.y = 250;
+    this.x = startX;
+    this.y = startY;
 
     this.srcX;
     this.srcY;
 
-    this.sheetWidth = 720;
-    this.sheetHeight = 240;
+    this.sheetWidth;// = 720;
+    this.sheetHeight;// = 240;
 
-    this.cols = 15;
-    this.rows = 5;
+    this.cols;// = 15;
+    this.rows;// = 5;
+
+    this.east = 2;
+    this.north = 0;
+    this.south = 4; 
+    this.west = 2; 
 
     this.currentFrame = 0;
 
-    this.speed = 5;
-    this.size = 1;
+    if (this.sheetname === "Skeleton"){
+        // skeleton sheet 640 * 187 
+        // 20 columns
+        this.sheetWidth = 600;
+        this.sheetHeight = 150;
+        this.cols = 20;
+        this.rows = 5;  
+    }else if (this.sheetname === "Spider"){
+        console.log("In spider")
+        // skeleton sheet 640 * 187 
+        // 20 columns
+        this.sheetWidth = 480;
+        this.sheetHeight = 1157;
+
+        this.cols = 5;
+        this.rows = 15;
+
+        this.east = 2;
+        this.north = 0;
+        this.south = 4; 
+        this.west = 2; 
+    }else if(this.sheetname === "Daemon"){
+        this.sheetWidth = 720;
+        this.sheetHeight = 240;
+
+        this.cols = 15;
+        this.rows = 5;
+
+        this.east = 2;
+        this.north = 0;
+        this.south = 4; 
+        this.west = 2; 
+    }
+
+    this.speed = Math.floor((Math.random()*5*speedMulty)+1);
+    this.size = 1.25;
 
     this.width = this.sheetWidth/this.cols;
     this.height = this.sheetHeight/this.rows;
@@ -41,11 +86,32 @@ function Character(characterName, health, game) {
 
     this.currentGridLocation = {row: 19, col: 0};
 
-    console.log(this.board)
+    // console.log(this.board)
 }
 
 Character.prototype.changeDirection = function(directions = DIRECTIONS){
     this.direction = directions[Math.floor(Math.random()*directions.length)];
+}
+
+Character.prototype.setAnimationSheetInfo = function(){
+    if (this.sheetname === "Skeleton"){
+        // skeleton sheet 640 * 187 
+        // 20 columns
+        this.sheetWidth = 600;
+        this.sheetHeight = 150;
+        this.cols = 20;
+        this.rows = 5;  
+    }else if (this.sheetname === "Spider"){
+        // skeleton sheet 640 * 187 
+        // 20 columns
+        this.sheetWidth = 480;
+        this.sheetHeight = 160;
+        this.cols = 5;
+        this.rows = 15;
+        this.east = 2;
+        this.north = 0;
+        this.south = 4  
+    }
 }
 
 Character.prototype.atInflectionPoint = function(){
@@ -175,21 +241,19 @@ Character.prototype.whichDirection = function(){
     }
     this.currentGridLocation.col = Math.floor((this.x+30)/30);
     this.currentGridLocation.row = Math.floor((this.y+30)/30);
-    let smallestNeighbor = this.board.grid[this.currentGridLocation.col][this.currentGridLocation.row];
-    console.log(smallestNeighbor);
-    console.log(this.currentGridLocation);
+    let smallestNeighbor = this.board.grid[this.currentGridLocation.col][this.currentGridLocation.row].smallestNeighbor;
     if( this.currentGridLocation.col < smallestNeighbor.j){
-        this.direction = "W";
-    }else if(this.currentGridLocation.col > smallestNeighbor.j){
         this.direction = "E";
+    }else if(this.currentGridLocation.col > smallestNeighbor.j){
+        this.direction = "W";
     }else if(this.currentGridLocation.row < smallestNeighbor.i){
-        console.log(smallestNeighbor.i)
-        this.direction = "N";
-    }else if(this.currentGridLocation.row > smallestNeighbor.i){
         this.direction = "S";
+    }else if(this.currentGridLocation.row > smallestNeighbor.i){
+        this.direction = "N";
     }
 
-    console.log(this.direction);
+    // if smallestNeighbor === 
+    //console.log(this.direction);
 
 }
 
@@ -199,16 +263,16 @@ Character.prototype.updateFrame = function(ctx) {
     this.srcY = this.currentFrame * this.height;
     switch (this.direction) {
         case "E":
-            this.srcX = this.width*2
+            this.srcX = this.width*this.east;//2
             break;
         case "N":
-            this.srcX = this.width*0
+            this.srcX = this.width*this.north;//0
             break;
         case "S":
-            this.srcX = this.width*4
+            this.srcX = this.width*this.south;//4
             break;
         case "W":
-            this.srcX = this.width*2
+            this.srcX = this.width*this.west;//2
             break;
         default:
             break;

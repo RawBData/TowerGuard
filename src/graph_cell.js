@@ -20,11 +20,12 @@ function GraphCell(board, id, i, j) {
     this.smallestNeighbor;
     this.directionFromNearestNeighbor = "E";
 	this.previous = undefined;
-	this.wall = false;
     this.shortestPath = [];
     
-    this.walkingPath = true;
-    this.startingArea = false;
+	this.wall = false;
+    this.walkingPath = false;
+	this.startingArea = false;
+	this.isTower = false;
     this.pathScore = -1;
 }
 

@@ -254,8 +254,6 @@ class Game {
       selectorImage.addEventListener('error', ()=>{console.log("fail selector");}, false);
       selectorImage.src = selectorImagePath;
       tSelector.appendChild(selectorImage);
-
-
     }
 
 
