@@ -10,7 +10,7 @@ const conjured=["Spider","Daemon","Scorpion","Skeleton","Slime","WaterElemental"
 const working=["Daemon","Skeleton"]
 
 
-function Character(characterName, health, game, startX = -10, startY = 250, speedMulty = 1) {
+function Character(characterName, health, game, startX = -10, startY = 250, speedMulty = 1, radius = 25) {
     //this.sheetname = 'Daemon.png'
     this.sheetname = working[Math.floor(Math.random()*working.length)];
     console.log(this.sheetname);
@@ -18,6 +18,8 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
     this.character = new Image();
     this.character.src = `../assets/sprites/${this.sheetname}.png`;
     this.gridCell;
+
+    this.radius = radius;
 
     this.x = startX;
     this.y = startY;
@@ -85,8 +87,10 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
 
     this.health = 100;
 
-    this.currentGridLocation = {row: 19, col: 0};
+    this.currentGridLocation = this.board.grid[0][10];
+    this.currentGridLocationCenterForTakingFire = this.currentGridLocation.center;
 
+    console.log(this.board.home)
 }
 
 Character.prototype.changeDirection = function(directions = DIRECTIONS){
@@ -145,7 +149,14 @@ Character.prototype.whichDirection = function(){
 
 }
 
+Character.prototype.getGridCenter = function(ctx) {
+    this.currentGridLocation.col = Math.floor((this.x+30)/30);
+    this.currentGridLocation.row = Math.floor((this.y+30)/30);
+    this.center  = this.board.grid[this.currentGridLocation.col][this.currentGridLocation.row].center;
+}
+
 Character.prototype.updateFrame = function(ctx) {
+    this.getGridCenter();
     this.characterDead();
     this.whichDirection();
     this.currentFrame = ++this.currentFrame%this.rows;
@@ -202,10 +213,28 @@ Character.prototype.characterDead = function(){
     let cCol = this.currentGridLocation.col;
     //console.log(homeBase)
     if ((hRow-cRow < 2 && hCol-cCol < 2)){
-        console.log("in removing character")
+        console.log("baddy made to home tower character")
+        this.board.remove("baddy",this);
+    }
+    if (this.health < 1){
+        console.log("Character was blasted off of screen")
         this.board.remove("baddy",this);
     }
 }
+
+Character.prototype.collided = function(otherObject){
+    console.log(this.center);
+    console.log(otherObjects)
+
+}
+
+Character.prototype.collideWith = function(otherObject) {
+    if (otherObject instanceof Projectile) {
+      this.health -= 50;
+      return true;
+    }
+    return false;
+  },
 
 module.exports = Character;
 

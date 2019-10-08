@@ -101,6 +101,7 @@ class Game {
   
   run(){
     this.render(this.ctx);
+    this.collisionDetection();
     //this.generateNextWave();
   }
 
@@ -110,26 +111,27 @@ class Game {
       //The Board
       // ctx.drawImage(this.tile, this.srcX, this.srcY, this.width, this.height, this.x, this.y, this.width*6, this.height*9)
       ctx.drawImage(this.boardImg, 0, 0, this.board.width, this.board.height, 0, 0, this.board.width, this.board.height)
-      //.drawImage(this.homeImg, 1100, 255);
+      ctx.drawImage(this.homeImg, 1100, 255);
 
         //Put Baddies on the board
         for (let i = 0; i < this.baddies.length; i++) {
           const baddy= this.baddies[i];
           //console.log(baddy);
-          //baddy.draw(this)
+          baddy.draw(this)
           
         }
         
         for (let t = 0; t < this.towers.length; t++) {
           const tower = this.towers[t];
           //console.log(baddy);
-          //tower.run(this);
+          tower.run(this);
           
         }
 
         for (let p = 0; p < this.projectiles.length; p++) {
           const projectile = this.projectiles[p];
-          //projectile.run(this);
+          //console.log(baddy);
+          projectile.run(this);
           
         }
 
@@ -137,8 +139,8 @@ class Game {
         //The Path Grid only shown for testing purposes
         for (let col = 0; col < this.gridCols; col++) {
             for (let row = 0; row < this.gridRows; row++) {
-                //console.log(this.grid[col][row].id);
-                this.grid[col][row].render();
+                //console.log(col,row);
+                // this.grid[col][row].render();
             }   
         }
 
@@ -148,6 +150,27 @@ class Game {
     //Gets the amount of bank left
     getBank(){
       return this.bank;
+    }
+
+    allObjects(){
+      return [].concat(this.baddies,this.projectiles);
+    }
+
+    collisionDetection(){
+      let allObjects = this.allObjects();
+
+
+      console.log(allObjects)
+      for (let i = 0; i < this.projectiles.length; i++) {
+        for (let k = 0; k < this.baddies.length; k++) {
+          let element1 = this.projectiles[i];
+          let element2 = this.baddies[k];
+          if (element1.collided(element2)){
+            let collision  = element1.collideWith(element2);
+            return collision;
+          }
+        }
+      }
     }
 
 
@@ -293,8 +316,8 @@ class Game {
 
 
     putTower(node){
-      console.log("Testing");
-      console.log(node)
+      // console.log("Testing");
+      // console.log(node)
         game.towers[game.towers.length-1].location = {
           x: ((node.j*this.cellWidth)+this.cellWidth/2),
           y: ((node.i*this.cellWidth)+this.cellWidth/2)
@@ -322,7 +345,6 @@ class Game {
             for (let row = 0; row < this.gridRows; row++) {
                 //console.log(col,row);
                 this.grid[col][row].addNeighbors();
-                // console.log(this.grid[col][row].id)
             }   
         }
 
@@ -342,7 +364,7 @@ class Game {
             currentCell.neighbors.forEach(flanders => {
                 if (flanders.pathScore === -1){
                     checkFifo.push(flanders); 
-                    flanders.pathScore = currentCell.pathScore+1;
+                    flanders.pathScore = currentCell.pathScore+30;
                 }
             })
         }
@@ -350,9 +372,9 @@ class Game {
 
         for (let col = 0; col < this.gridCols; col++) {
             for (let row = 0; row < this.gridRows; row++) {
-                let currentNode = this.grid[col][row];
-                if(!currentNode.wall && currentNode.walkingPath){
-                  currentNode.getLeastNeighborPath();
+                //console.log(col,row);
+                if(!this.grid[col][row].wall){
+                    this.grid[col][row].getLeastNeighborPath();
                 }
             }   
         }

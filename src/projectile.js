@@ -1,12 +1,15 @@
 
-let Projectile = function(location, enemyOrientationAngle, prjImg, velocity = 6, game){
+const Character = require('./characters');
+
+let Projectile = function(location, enemyOrientationAngle, prjImg, velocity = 6, game, radius = 25){
     this.location = location;
     this.enemyOrientationAngle = enemyOrientationAngle;
     this.prjImg = prjImg;
     this.velocity = velocity;
     this.game = game;
-    console.log(this.location)
-    console.log(this.game);
+    this.radius = radius;
+    //console.log(this.location)
+    //console.log(this.game);
 
 }
 
@@ -32,31 +35,43 @@ Projectile.prototype = {
 
     },
 
-    collided:function(){
-        this.game.ctx.save();
-        this.game.ctx.translate(this.location.x,this.location.y);
-        this.game.ctx.rotate(this.enemyOrientationAngle);
-        this.game.ctx.drawImage(this.prjImg, -this.prjImg.width/2, -this.prjImg.height/2)
-        this.game.ctx.restore();
-
-    },
-
+    
     isOutOfBounds:function(){
         let height = this.game.ctx.canvas.height;
         let width = this.game.ctx.canvas.width;
-
+        
         if (this.location.x < 0 || this.location.y < 0 || this.location.x > width || this.location.y > height){ 
             this.game.remove("projectile",this)
         };
     },
+    
+    collided:function(otherObject){
+        
+        console.log(this.location);
+        console.log(otherObject)
+        let distance = this.findDist(otherObject.center,this.location)
+        console.log(distance)
+
+        return (this.radius + otherObject.radius) > distance;
+
+    },
 
     collideWith:function(otherObject) {
         if (otherObject instanceof Character) {
+            console.log("collision")
           otherObject.health -= 25;
+          this.game.remove("projectile",this)
           return true;
         }
         return false;
-      },
+    },
+
+    findDist:function(pos1, pos2) {
+        return Math.sqrt(
+          Math.pow(pos1.x - pos2.x, 2) + Math.pow(pos1.y - pos2.y, 2)
+        );
+    }
+      
 
 }
 

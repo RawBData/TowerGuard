@@ -5,6 +5,7 @@ function GraphCell(board, id, i, j) {
     this.board = board;
     this.cellWidth = this.board.cellWidth;
     this.location = {x: i*this.cellWidth ,y: j*this.cellWidth}
+    this.center = {x: this.location.x + 1/2*this.cellWidth, y: this.location.y + 1/2*this.cellWidth}
     this.parentNode = "";
     this.context = this.board.ctx;
 
@@ -27,7 +28,6 @@ function GraphCell(board, id, i, j) {
     }else{
         this.walkingPath = false;
     }
-    this.occupied;
 	this.wall = false;
 	this.startingArea = false;
 	this.isTower = false;
@@ -43,21 +43,41 @@ GraphCell.prototype.addNeighbors = function(){
     let col = this.j;
     let row = this.i;
     let grid = this.board.grid;
-    let walkingPath = this.walkingPath;
 
-    if(row > 0 && !this.wall && !grid[col][row-1].wall && walkingPath){
+    if(row > 0 && !this.wall && !grid[col][row-1].wall){
         this.neighbors.push(grid[col][row-1]);
     }
-    if(col < grid.length-1 && !this.wall && !grid[col+1][row].wall && walkingPath){
+    if(col < grid.length-1 && !this.wall && !grid[col+1][row].wall){
         this.neighbors.push(grid[col+1][row]);
     }
-    if(row < grid[col].length-1 && !this.wall && !grid[col][row+1].wall && walkingPath){
+    if(row < grid[col].length-1 && !this.wall && !grid[col][row+1].wall){
         this.neighbors.push(grid[col][row+1]);
     }
-    if(col > 0 && !this.wall && !grid[col-1][row].wall && walkingPath){
+    if(col > 0 && !this.wall && !grid[col-1][row].wall){
         this.neighbors.push(grid[col-1][row]);
     }
 }
+
+
+// GraphCell.prototype.addNeighbors = function(){
+
+//     let col = this.j;
+//     let row = this.i;
+//     let grid = this.board.grid;
+
+//     if(row > 0 && !this.wall && !grid[col][row-1].wall){
+//         this.neighbors.push(grid[col][row-1]);
+//     }
+//     if(col < grid.length-1 && !this.wall && !grid[col+1][row].wall){
+//         this.neighbors.push(grid[col+1][row]);
+//     }
+//     if(row < grid[col].length-1 && !this.wall && !grid[col][row+1].wall){
+//         this.neighbors.push(grid[col][row+1]);
+//     }
+//     if(col > 0 && !this.wall && !grid[col-1][row].wall){
+//         this.neighbors.push(grid[col-1][row]);
+//     }
+// }
 
 GraphCell.prototype.render = function(){
     if (this.wall){
