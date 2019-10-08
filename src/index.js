@@ -2,7 +2,8 @@
 const Tower = require('./tower');
 const Character = require('./characters')
 const GraphCell = require('./graph_cell');
-const Projectile = require('./projectile')
+const Projectile = require('./projectile');
+const Sound = require('./sound');
 
 let game;
 //
@@ -11,9 +12,12 @@ let now;
 let then = Date.now();
 let interval = 1000/fps;
 let delta;
+let soundTrack;
 
 let initialize = function(){
   game = new Game();
+  //soundTrack = new Sound('../assets/arrow.mp3')
+  //soundTrack.play();
   window.setTimeout(animation, 200);
 }
 
@@ -45,6 +49,7 @@ class Game {
     this.projectiles = [];
     this.grid = []
 
+    // this.soundTrack = new Sound('../assets/arrow.mp3');
 
     this.currentScore = 0;
     this.bank = 1000;
@@ -79,11 +84,13 @@ class Game {
     this.board.height = 600;
     document.getElementById("canv").appendChild(this.board);
 
+    // this.board.soundTrack = new Sound('../assets/soundTrack.mp3');
+
     //event listeners
     this.board.addEventListener('mousemove', this.handleBoardMouseMoved, false)
     this.board.addEventListener('mouseover', this.handleBoardMouseOver, false)
     this.board.addEventListener('click', this.handleBoardMouseClick, false)
-
+    this.board.newSound = new Sound('../assets/soundTrack.mp3');
 
     this.ctx = this.board.getContext("2d");
     if(!this.ctx){
@@ -93,9 +100,10 @@ class Game {
     this.cellWidth = 30;
     this.gridCols = this.board.width/this.cellWidth;
     this.gridRows = this.board.height/this.cellWidth;
+    this.playMusic = this.playMusic.bind(this);
     this.createGrid();
     this.generateNextWave();
-
+    this.playMusic();
   }
 
   
@@ -152,12 +160,15 @@ class Game {
         }
 
         
-    }
+  }
+
+  playMusic(){
+  }
 
     //Gets the amount of bank left
-    getBank(){
-      return this.bank;
-    }
+  getBank(){
+    return this.bank;
+  }
 
 
 
@@ -177,8 +188,6 @@ class Game {
 
     //Tower Display, Selection and Dropping
     setTowerFunctions(towerSelectorsArray){
-
-
       towerSelectorsArray.forEach((tower, i)=>{
         tower.addEventListener('mouseover',this.selectorHoverOn, false)
         tower.addEventListener('mouseout',this.selectorHoverOff, false)
@@ -210,6 +219,8 @@ class Game {
 
 
     createTower(selector){
+    
+      
       let tower = new Tower(selector.cost, selector.tImage, selector.bImage, game);
       if (tower){
         console.log(tower);
@@ -222,6 +233,9 @@ class Game {
 
 
     createTowerSelectors(){
+
+      
+
       let TowerSelectors = [];
       for (let i = 0; i < 5; i++) {
         let tSelector = document.createElement("div");
@@ -383,12 +397,16 @@ class Game {
     }
 
   generateNextWave(){
+    this.board.newSound.stop();
+    console.log(this.board.newSound)
+    this.board.newSound.play();
+
     for (let i = 0; i < this.waveAmount; i++) {
         let newX = Math.floor(Math.random()*1200);
         let newY = Math.floor(Math.random()*600);
       let newBaddy = new Character(0,0,this,newX, newY);
       this.baddies.push(newBaddy);
-         
+      // this.board.soundTrack.play();
     }
   }
   

@@ -7,7 +7,9 @@ const humanUnits = ["Archer","Brigand","Catapult","Cleric","Conjurer","Peasant",
 const orcUnits = ["Necrolyte","Ogre","Grunt","Raider","Skeleton","Spearman","Medivh","Warlock","GaronaGriselda"];
 const allBad=["Spider","Daemon","Scorpion"];
 const conjured=["Spider","Daemon","Scorpion","Skeleton","Slime","WaterElemental","FireElemental"];
-const working=["Daemon","Skeleton"]
+const working=["Daemon","Skeleton"];
+
+const Sound = require("./sound");
 
 
 function Character(characterName, health, game, startX = -10, startY = 250, speedMulty = 1, radius = 25) {
@@ -18,6 +20,8 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
     this.character = new Image();
     this.character.src = `../assets/sprites/${this.sheetname}.png`;
     this.gridCell;
+
+    this.dyingSound = new Sound('../assets/dying.mp3');
 
     this.radius = radius;
 
@@ -225,6 +229,7 @@ Character.prototype.characterDead = function(){
     }
     if (this.health < 1){
         console.log("Character was blasted off of screen")
+        this.dyingSound.play();
         this.board.bank += this.value;
         this.board.remove("baddy",this);
     }
