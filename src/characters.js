@@ -41,6 +41,8 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
 
     this.currentFrame = 0;
 
+    this.health = 100;
+    this.value = 100;
     if (this.sheetname === "Skeleton"){
         // skeleton sheet 640 * 187 
         // 20 columns
@@ -48,6 +50,8 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
         this.sheetHeight = 150;
         this.cols = 20;
         this.rows = 5;  
+        this.health = 100;
+        this.value = 100;
     }else if (this.sheetname === "Spider"){
         console.log("In spider")
         // skeleton sheet 640 * 187 
@@ -73,6 +77,9 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
         this.north = 0;
         this.south = 4; 
         this.west = 2; 
+
+        this.health = 500;
+        this.value = 1000;
     }
 
     this.speed = Math.floor((Math.random()*5*speedMulty)+1);
@@ -85,7 +92,7 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
     this.direction = "E"; ///"N" "W" "S"
     //console.log(this);
 
-    this.health = 100;
+    // this.health = 100;
 
     this.currentGridLocation = this.board.grid[0][10];
     this.currentGridLocationCenterForTakingFire = this.currentGridLocation.center;
@@ -152,7 +159,7 @@ Character.prototype.whichDirection = function(){
 Character.prototype.getGridCenter = function(ctx) {
     this.currentGridLocation.col = Math.floor((this.x+30)/30);
     this.currentGridLocation.row = Math.floor((this.y+30)/30);
-    this.center  = this.board.grid[this.currentGridLocation.col][this.currentGridLocation.row].center;
+    this.center = this.board.grid[this.currentGridLocation.col][this.currentGridLocation.row].center;
 }
 
 Character.prototype.updateFrame = function(ctx) {
@@ -218,6 +225,7 @@ Character.prototype.characterDead = function(){
     }
     if (this.health < 1){
         console.log("Character was blasted off of screen")
+        this.board.bank += this.value;
         this.board.remove("baddy",this);
     }
 }

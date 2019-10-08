@@ -102,11 +102,16 @@ class Game {
   run(){
     this.render(this.ctx);
     this.collisionDetection();
-    //this.generateNextWave();
+    if (this.baddies.length<1){
+      console.log("in if ")
+      this.generateNextWave();
+      console.log(this.bank);
+    }
   }
 
   
   render(ctx){
+      
       ctx.clearRect(0,0,this.board.width,this.board.height);
       //The Board
       // ctx.drawImage(this.tile, this.srcX, this.srcY, this.width, this.height, this.x, this.y, this.width*6, this.height*9)
@@ -121,6 +126,7 @@ class Game {
           
         }
         
+        //Put towers on the board
         for (let t = 0; t < this.towers.length; t++) {
           const tower = this.towers[t];
           //console.log(baddy);
@@ -128,6 +134,7 @@ class Game {
           
         }
 
+        //Put projectiles on the board
         for (let p = 0; p < this.projectiles.length; p++) {
           const projectile = this.projectiles[p];
           //console.log(baddy);
@@ -152,15 +159,9 @@ class Game {
       return this.bank;
     }
 
-    allObjects(){
-      return [].concat(this.baddies,this.projectiles);
-    }
+
 
     collisionDetection(){
-      let allObjects = this.allObjects();
-
-
-      console.log(allObjects)
       for (let i = 0; i < this.projectiles.length; i++) {
         for (let k = 0; k < this.baddies.length; k++) {
           let element1 = this.projectiles[i];
@@ -240,7 +241,7 @@ class Game {
   
         document.getElementById("playables").append(tSelector)
   
-        tSelector.cost = 100*i+50;
+        tSelector.cost = 50*i+25;
         tSelector.id = "tSel"+i;
         TowerSelectors.push(tSelector);
         let selectorImagePath= `../assets/sprites_towers/tower_against_${this.baddiesType}_0${i+1}.png`;
@@ -279,22 +280,23 @@ class Game {
       let row = Math.floor(event.offsetY/game.cellWidth);
       let col = Math.floor(event.offsetX/game.cellWidth);
       let node = game.grid[col][row];
-      console.log(node)
+      // console.log(node)
       
       if(game.towerSelected && game.nodeAvailable(node)){
-      game.putTower(node);
+        game.putTower(node);
+        game.bank -= game.towers[game.towers.length-1].cost;
       }
 
       else if(!game.towerSelected && !node.hasTower) {
           // putting walls on the board
           if (!node.wall && game.getBank() >= game.wallVal){
-              game.bankValue -= game.wallVal;
+              game.bank -= game.wallVal;
               node.wall = true;
           } else if(!node.wall) {
               alert("Not Enough Dinero");
               }
           else {
-              game.bankValue += game.wallVal;
+              game.bank += game.wallVal;
               node.wall = false;
           }
           //game.brushfire(game.undo(node));   // all new distances and parents

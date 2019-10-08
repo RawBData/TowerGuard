@@ -46,12 +46,7 @@ Projectile.prototype = {
     },
     
     collided:function(otherObject){
-        
-        console.log(this.location);
-        console.log(otherObject)
         let distance = this.findDist(otherObject.center,this.location)
-        console.log(distance)
-
         return (this.radius + otherObject.radius) > distance;
 
     },
