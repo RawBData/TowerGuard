@@ -90,7 +90,7 @@ GraphCell.prototype.render = function(){
     this.context.strokeRect(this.location.x, this.location.y, this.cellWidth, this.cellWidth);
     this.context.font = "10px Arial";
     this.context.fillStyle="#000000";
-    this.context.fillText(this.id,this.location.x+5,this.location.y+15);
+    this.context.fillText(this.pathScore,this.location.x+5,this.location.y+15);
 
 }
 

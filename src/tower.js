@@ -20,7 +20,6 @@ class Tower{
 
         this.lastFired = Date.now();
         this.reloadTime = 500;
-        console.log("tower constructed")
 
         this.shoot = this.shoot.bind(this);
     }
@@ -40,7 +39,6 @@ class Tower{
     }
 
     shoot(){
-        //console.log("shooting")
         let newProj = new Projectile({x:this.location.x, y:this.location.y}, this.enemyOrientationAngle, this.projectileImg, this.projectileSpeed, this.game)
         this.game.projectiles.push(newProj);
     }
@@ -53,7 +51,6 @@ class Tower{
 
     update(){
         this.baddy = this.findBaddy()
-        //console.log(this.baddy);
         let dx;
         let dy;;
         if (this.baddy){
@@ -97,7 +94,6 @@ class Tower{
         for(let i=0;i<this.baddies.length;i++){
         //checking center of all baddies and attacking closest one
         let baddy = this.baddies[i]
-        //console.log(baddy)
         let distance = this.findDist(baddy.center, this.location)
           if(distance < this.firingRange){
             return this.baddies[i]

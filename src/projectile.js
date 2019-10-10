@@ -8,8 +8,6 @@ let Projectile = function(location, enemyOrientationAngle, prjImg, velocity = 6,
     this.velocity = velocity;
     this.game = game;
     this.radius = radius;
-    //console.log(this.location)
-    //console.log(this.game);
 
 }
 
@@ -53,7 +51,6 @@ Projectile.prototype = {
 
     collideWith:function(otherObject) {
         if (otherObject instanceof Character) {
-            console.log("collision")
           otherObject.health -= 25;
           this.game.remove("projectile",this)
           return true;

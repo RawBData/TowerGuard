@@ -15,8 +15,9 @@ const Sound = require("./sound");
 function Character(characterName, health, game, startX = -10, startY = 250, speedMulty = 1, radius = 25) {
     //this.sheetname = 'Daemon.png'
     this.sheetname = working[Math.floor(Math.random()*working.length)];
-    console.log(this.sheetname);
+    //console.log(this.sheetname);
     this.board = game;
+    //console.log(this.board);
     this.character = new Image();
     this.character.src = `../assets/sprites/${this.sheetname}.png`;
     this.gridCell;
@@ -47,6 +48,7 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
 
     this.health = 100;
     this.value = 100;
+    this.damage = 10;
     if (this.sheetname === "Skeleton"){
         // skeleton sheet 640 * 187 
         // 20 columns
@@ -56,8 +58,9 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
         this.rows = 5;  
         this.health = 100;
         this.value = 100;
+        this.damage = 25;
     }else if (this.sheetname === "Spider"){
-        console.log("In spider")
+        // console.log("In spider")
         // skeleton sheet 640 * 187 
         // 20 columns
         this.sheetWidth = 480;
@@ -84,6 +87,7 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
 
         this.health = 500;
         this.value = 1000;
+        this.damage = 100;
     }
 
     this.speed = Math.floor((Math.random()*5*speedMulty)+1);
@@ -101,7 +105,7 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
     this.currentGridLocation = this.board.grid[0][10];
     this.currentGridLocationCenterForTakingFire = this.currentGridLocation.center;
 
-    console.log(this.board.home)
+    //console.log(this.board.home)
 }
 
 Character.prototype.changeDirection = function(directions = DIRECTIONS){
@@ -141,8 +145,8 @@ Character.prototype.whichDirection = function(){
     }else if (this.y < -30){
         this.direction = "S";
     }
-    this.currentGridLocation.col = Math.floor((this.x+30)/30);
-    this.currentGridLocation.row = Math.floor((this.y+30)/30);
+    this.currentGridLocation.col = Math.floor((this.x)/30);
+    this.currentGridLocation.row = Math.floor((this.y)/30);
     let smallestNeighbor = this.board.grid[this.currentGridLocation.col][this.currentGridLocation.row].smallestNeighbor;
 
     if( this.currentGridLocation.col < smallestNeighbor.j){
@@ -161,9 +165,13 @@ Character.prototype.whichDirection = function(){
 }
 
 Character.prototype.getGridCenter = function(ctx) {
-    this.currentGridLocation.col = Math.floor((this.x+30)/30);
-    this.currentGridLocation.row = Math.floor((this.y+30)/30);
-    this.center = this.board.grid[this.currentGridLocation.col][this.currentGridLocation.row].center;
+    this.currentGridLocation.col = Math.floor((this.x)/30);
+    this.currentGridLocation.row = Math.floor((this.y)/30);
+
+    //console.log(this.board.grid[this.currentGridLocation.col][this.currentGridLocation.row]);
+    if (this.board.grid[this.currentGridLocation.col][this.currentGridLocation.row]) this.center = this.board.grid[this.currentGridLocation.col][this.currentGridLocation.row].center; 
+    // this.center = this.board.grid[this.currentGridLocation.col][this.currentGridLocation.row].center || {x:0,y:0};
+
 }
 
 Character.prototype.updateFrame = function(ctx) {
@@ -224,20 +232,25 @@ Character.prototype.characterDead = function(){
     let cCol = this.currentGridLocation.col;
     //console.log(homeBase)
     if ((hRow-cRow < 2 && hCol-cCol < 2)){
-        console.log("baddy made to home tower character")
+        //console.log("baddy made to home tower character")
+        this.board.health -= this.damage;
         this.board.remove("baddy",this);
+        //console.log(this.board.health);
     }
     if (this.health < 1){
-        console.log("Character was blasted off of screen")
+        //console.log("Character was blasted off of screen")
         this.dyingSound.play();
         this.board.bank += this.value;
+        this.board.health += 10;
+        this.board.currentScore += 10;
+        this.board.baddiesDefeated += 1;
         this.board.remove("baddy",this);
     }
 }
 
 Character.prototype.collided = function(otherObject){
-    console.log(this.center);
-    console.log(otherObjects)
+    // console.log(this.center);
+    // console.log(otherObjects)
 
 }
 

@@ -7,15 +7,32 @@
   </head>
 
   <body>
+
+      <div id="game-modal" class="game-start-modal">
+        <div>
+          <h1 class="game-title">Tower Guard</h1>
+
+        </div>
+            <div class="game-options-container">
+              <div id="human" value="orcs" selected=true>Human</div>
+              <div id="orc" value="humans">Orc</div>
+              <div id="start-game">Start Game</div>
+          </div>
+        </div>
+      </div>
+
     <div id="whole-screen">
         
         
         <div class="canv-playables-container">
             <div id="canv"></div>
-            <div id="playables"></div>
+            <div class="menu-stats">
+              <div id="playables"></div>
+              <div id="stats"></div>
+            </div>
         </div>
         
-        <div id="stats">
+        <div id="developer">
         </div>
     
     </div> 

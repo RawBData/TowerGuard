@@ -13,11 +13,51 @@ let then = Date.now();
 let interval = 1000/fps;
 let delta;
 let soundTrack;
+let startGame = false;
+let enemyType = "orcs";
+
+
+
+
+
+
+
+let chooseDestiny = function(){
+    document.getElementById('human').style.textDecoration="underline";
+    document.getElementById('human').style.color='red';
+  // modal logic
+  document.getElementById("start-game").addEventListener("click", function() {
+    document.getElementById('game-modal').style.display='none';
+    window.setTimeout(initialize, 100);
+  });
+
+  document.getElementById("human").addEventListener("click", function() {
+    enemyType = "orcs";
+    document.getElementById('orc').style.color='white';
+    document.getElementById('orc').style.textDecoration="none";
+    document.getElementById('human').style.color='red';
+    document.getElementById('human').style.textDecoration="underline";
+
+  });
+
+  document.getElementById("orc").addEventListener("click", function() {
+    enemyType = "humans";
+    document.getElementById('human').style.color='white';
+    document.getElementById('human').style.textDecoration="none";
+    document.getElementById('orc').style.color='red';
+    document.getElementById('orc').style.textDecoration="underline";
+
+  });
+
+
+}
 
 let initialize = function(){
-  game = new Game();
-  //soundTrack = new Sound('../assets/arrow.mp3')
-  //soundTrack.play();
+  game = new Game(enemyType);
+  window.setTimeout(animation, 200);
+}
+
+if (startGame){
   window.setTimeout(animation, 200);
 }
 
@@ -49,16 +89,19 @@ class Game {
     this.projectiles = [];
     this.grid = []
 
-    // this.soundTrack = new Sound('../assets/arrow.mp3');
-
+    
+    //stats
     this.currentScore = 0;
     this.bank = 1000;
     this.score= 0;
     this.currentHealth = 1000;
     this.wallVal = 10;
-
-
+    this.health = 1000;
     this.currWave = 0;
+    this.baddiesDefeated = 0;
+
+
+
     this.boardImg = new Image();
     this.boardImg.src = `../assets/sprites/game_board_01.png`;
     //dynamic homebase 
@@ -73,6 +116,7 @@ class Game {
     this.towerSelected = false;
     this.towerSelectors = this.createTowerSelectors();
     this.setTowerFunctions(this.towerSelectors);
+    this.createGameStats();
 
     window.game = this;
 
@@ -102,7 +146,6 @@ class Game {
     this.gridRows = this.board.height/this.cellWidth;
     this.playMusic = this.playMusic.bind(this);
     this.createGrid();
-    this.generateNextWave();
     this.playMusic();
   }
 
@@ -111,10 +154,13 @@ class Game {
     this.render(this.ctx);
     this.collisionDetection();
     if (this.baddies.length<1){
-      console.log("in if ")
-      this.generateNextWave();
-      console.log(this.bank);
+      this.endOfRoundLogic();
+      //console.log(this.bank);
     }
+    if (this.health < 1){
+      console.log("Game Over")
+    }
+    this.updateStats();
   }
 
   
@@ -200,7 +246,7 @@ class Game {
       this.style.backgroundColor = 'yellow';
     }
     selectorHoverOff(){
-      this.style.backgroundColor = '#DDD';
+      this.style.backgroundColor = 'green';
     }
     selectorPressed(){
       this.style.backgroundColor = 'Red';
@@ -233,9 +279,6 @@ class Game {
 
 
     createTowerSelectors(){
-
-      
-
       let TowerSelectors = [];
       for (let i = 0; i < 5; i++) {
         let tSelector = document.createElement("div");
@@ -269,7 +312,89 @@ class Game {
       return TowerSelectors;
     }
 
+    createGameStats(){
+      let GameStats = [];
+      let statsTypesArr = ["health","bank","wave","enemiesLeft","total-killed"];
+      let htmlInner;
+      let statTitle;
+      for (let i = 0; i < 5; i++) {
+        switch (statsTypesArr[i]) {
+          case "health": 
+          statTitle = document.createTextNode("Health");
+          htmlInner = this.health;
+          break;
 
+          case "bank":
+            statTitle = document.createTextNode("Bank");
+            htmlInner = this.bank;
+          break;
+
+          case "wave":
+            statTitle = document.createTextNode("Wave");
+            htmlInner = this.currWave;
+          break;
+
+          case "enemiesLeft":
+            statTitle = document.createTextNode("Enemies");
+            htmlInner = this.baddies.length;
+          break;
+
+          case "total-killed":
+            statTitle = document.createTextNode("Dead");
+            htmlInner = this.baddiesDefeated;
+          break;
+        
+          default:
+          break;
+        }
+        let statsHolder = document.createElement("div");
+        statsHolder.append(statTitle)
+        statsHolder.append(document.createElement("BR"))
+        statsHolder.append(htmlInner)
+        // statsHolder.innerHTML = htmlInner;
+        statsHolder.className = "stats-divs";
+        statsHolder.id = statsTypesArr[i];
+        document.getElementById("stats").append(statsHolder)
+      
+      }
+      // this.updateStats();
+      // console.log("done creating stats divs")
+      return GameStats;
+    }
+
+    updateStats(){
+      let statsTypesArr = ["health","bank","wave","enemiesLeft","total-killed"]
+      let statsDivs = document.getElementById('stats').getElementsByClassName('stats-divs');
+      for (let i = 0; i < statsDivs.length; i++) {
+        const stat = statsDivs[i];
+        // console.log(statsDivs)
+        switch (stat.id) {
+          case "health":
+            stat.innerHTML = `Health<br>${this.health}`
+          break;
+
+          case "bank":
+            stat.innerHTML = `Bank<br>${this.bank}`
+          break;
+
+          case "wave":
+            stat.innerHTML = `Wave<br>${this.currWave}`
+          break;
+
+          case "enemiesLeft":
+            stat.innerHTML = `Enemies<br>${this.baddies.length}`
+          break;
+
+          case "total-killed":
+            stat.innerHTML = `Dead<br>${this.baddiesDefeated}`
+          break;
+        
+          default:
+            break;
+        }
+        
+      }
+    }
 
     //Game logic to add towers to canvas
     handleBoardMouseMoved(event){
@@ -290,7 +415,7 @@ class Game {
     }
   
     handleBoardMouseClick(event){
-      console.log(event);
+      //console.log(event);
       let row = Math.floor(event.offsetY/game.cellWidth);
       let col = Math.floor(event.offsetX/game.cellWidth);
       let node = game.grid[col][row];
@@ -371,6 +496,10 @@ class Game {
         this.createPaths();
     }
 
+    getGridLocationCEnter(i,j){
+
+    }
+
 
     createPaths(){
         //I will be using the brushfire design with end goal in mind
@@ -396,13 +525,20 @@ class Game {
         }
     }
 
+
+  endOfRoundLogic(){
+    this.waveAmount = Math.floor(this.waveAmount*1.20);
+    this.currWave += 1;
+    this.generateNextWave();
+  }
+
   generateNextWave(){
     this.board.newSound.stop();
-    console.log(this.board.newSound)
+    // console.log(this.board.newSound)
     this.board.newSound.play();
 
     for (let i = 0; i < this.waveAmount; i++) {
-        let newX = Math.floor(Math.random()*1200);
+        let newX = 0;
         let newY = Math.floor(Math.random()*600);
       let newBaddy = new Character(0,0,this,newX, newY);
       this.baddies.push(newBaddy);
@@ -423,4 +559,5 @@ class Game {
 }
 
 
-window.addEventListener('load', initialize, false);
+// window.addEventListener('load', initialize, false);
+window.addEventListener('load', chooseDestiny, false);
