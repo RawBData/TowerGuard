@@ -89,10 +89,14 @@ canvas {
 }
 
 .stats-divs{
+    color: firebrick;
     border-style: inset;
     border-width: 5px;
     border-radius: 3px;
     background-color: lightgrey;
+    font-weight: bolder;
+    display: flex;
+    margin-bottom: 1vh;
 }
 
 #end-modal{

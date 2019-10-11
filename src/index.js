@@ -97,8 +97,7 @@ class Game {
     this.bank = 1000;
     this.score= 0;
     this.currentHealth = 1000;
-    this.wallVal = 10;
-    this.health = 10;
+    this.health = 1000;
     this.currWave = 0;
     this.baddiesDefeated = 0;
 
@@ -436,7 +435,7 @@ class Game {
               game.bank -= game.wallVal;
               node.wall = true;
           } else if(!node.wall) {
-              alert("Not Enough Dinero");
+              // alert("Not Enough Dinero");  
               }
           else {
               game.bank += game.wallVal;
