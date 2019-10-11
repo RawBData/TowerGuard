@@ -49,6 +49,8 @@ let chooseDestiny = function(){
 
   });
 
+  
+
 
 }
 
@@ -96,7 +98,7 @@ class Game {
     this.score= 0;
     this.currentHealth = 1000;
     this.wallVal = 10;
-    this.health = 1000;
+    this.health = 10;
     this.currWave = 0;
     this.baddiesDefeated = 0;
 
@@ -151,6 +153,8 @@ class Game {
 
   
   run(){
+    if(this.health < 1) this.gameOver();
+    this.updateStats();
     this.render(this.ctx);
     this.collisionDetection();
     if (this.baddies.length<1){
@@ -160,7 +164,6 @@ class Game {
     if (this.health < 1){
       console.log("Game Over")
     }
-    this.updateStats();
   }
 
   
@@ -243,10 +246,11 @@ class Game {
     }
 
     selectorHoverOn(){
-      this.style.backgroundColor = 'yellow';
+      this.style.backgroundImage = 'radial-gradient(green, brown)';
     }
     selectorHoverOff(){
-      this.style.backgroundColor = 'green';
+      this.style.backgroundImage = 'radial-gradient(brown, green)';
+
     }
     selectorPressed(){
       this.style.backgroundColor = 'Red';
@@ -553,6 +557,12 @@ class Game {
     }else if (objectType === "baddy"){
       this.baddies.splice(this.baddies.indexOf(item), 1);
     }
+  }
+
+  gameOver(){
+    console.log("in game over function")
+    document.getElementById('game-on').style.display='none';
+    document.getElementById('end-modal').style.display='block';
   }
   
   

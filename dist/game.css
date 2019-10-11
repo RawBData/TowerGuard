@@ -95,3 +95,7 @@ canvas {
     background-color: lightgrey;
 }
 
+#end-modal{
+    display:none;
+}
+
