@@ -20,8 +20,10 @@ class Tower{
 
         this.lastFired = Date.now();
         this.reloadTime = 500;
-
+        this.damage = cost;
         this.shoot = this.shoot.bind(this);
+
+        
     }
 
     checkForBaddies(target){
@@ -39,7 +41,7 @@ class Tower{
     }
 
     shoot(){
-        let newProj = new Projectile({x:this.location.x, y:this.location.y}, this.enemyOrientationAngle, this.projectileImg, this.projectileSpeed, this.game)
+        let newProj = new Projectile({x:this.location.x, y:this.location.y}, this.enemyOrientationAngle, this.projectileImg, this.projectileSpeed, this.game, this.damage)
         this.game.projectiles.push(newProj);
     }
 

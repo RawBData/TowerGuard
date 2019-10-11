@@ -1,13 +1,15 @@
 
 const Character = require('./characters');
 
-let Projectile = function(location, enemyOrientationAngle, prjImg, velocity = 6, game, radius = 25){
+let Projectile = function(location, enemyOrientationAngle, prjImg, velocity = 6, game, damage = 25, radius = 25, ){
     this.location = location;
     this.enemyOrientationAngle = enemyOrientationAngle;
     this.prjImg = prjImg;
     this.velocity = velocity;
     this.game = game;
     this.radius = radius;
+    this.damage = damage
+    
 
 }
 
@@ -51,7 +53,7 @@ Projectile.prototype = {
 
     collideWith:function(otherObject) {
         if (otherObject instanceof Character) {
-          otherObject.health -= 25;
+          otherObject.health -= this.damage;
           this.game.remove("projectile",this)
           return true;
         }

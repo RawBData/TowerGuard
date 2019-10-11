@@ -301,7 +301,7 @@ class Game {
   
         document.getElementById("playables").append(tSelector)
   
-        tSelector.cost = 50*i+25;
+        tSelector.cost = 50*i*5+50;
         tSelector.id = "tSel"+i;
         TowerSelectors.push(tSelector);
         let selectorImagePath= `../assets/sprites_towers/tower_against_${this.baddiesType}_0${i+1}.png`;

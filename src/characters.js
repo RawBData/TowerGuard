@@ -86,7 +86,7 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
         this.west = 2; 
 
         this.health = 500;
-        this.value = 1000;
+        this.value = 400;
         this.damage = 100;
     }
 
