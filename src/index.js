@@ -282,6 +282,7 @@ class Game {
 
 
     createTowerSelectors(){
+      console.log("in index.js")
       let TowerSelectors = [];
       for (let i = 0; i < 5; i++) {
         let tSelector = document.createElement("div");
@@ -308,7 +309,40 @@ class Game {
         let selectorImage = new Image();
         selectorImage.addEventListener('error', ()=>{console.log("fail selector");}, false);
         selectorImage.src = selectorImagePath;
+
         tSelector.appendChild(selectorImage);
+
+
+        let tCost = document.createTextNode(`${tSelector.cost}`);
+        let tCostDiv = document.createElement("div");
+        tCostDiv.className = "costs-divs";
+        tCostDiv.append(tCost);
+
+
+
+        
+        // statsHolder.append(document.createElement("BR"))
+        // statsHolder.append(htmlInner)
+        // statsHolder.innerHTML = htmlInner;
+        // statsHolder.className = "stats-divs";
+        // statsHolder.id = statsTypesArr[i];
+        // document.getElementById("stats").append(statsHolder)
+
+
+
+        // myimg.insertAdjacentHTML("afterend", "This is my caption.");
+        
+        
+        // document.createElement("div");
+        // tCost.innerHTML = "100";
+        
+        
+        
+
+        document.getElementById(`${tSelector.id}`).appendChild(tCostDiv); 
+
+        //tSelector.append(tCostDiv);
+        
       }
   
   

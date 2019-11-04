@@ -35,6 +35,7 @@ canvas {
 }
 #stats{
     background-color: brown;
+    display: flex;
 }
 
 .menu-stats{
@@ -89,6 +90,17 @@ canvas {
 }
 
 .stats-divs{
+    color: firebrick;
+    border-style: inset;
+    border-width: 5px;
+    border-radius: 3px;
+    background-color: lightgrey;
+    font-weight: bolder;
+    display: flex;
+    margin-bottom: 1vh;
+}
+
+.costs-divs{
     color: firebrick;
     border-style: inset;
     border-width: 5px;
