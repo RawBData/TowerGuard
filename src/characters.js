@@ -7,8 +7,8 @@ const humanUnits = ["Archer","Brigand","Catapult","Cleric","Conjurer","Peasant",
 const orcUnits = ["Necrolyte","Ogre","Grunt","Raider","Skeleton","Spearman","Medivh","Warlock","GaronaGriselda"];
 const allBad=["Spider","Daemon","Scorpion"];
 const conjured=["Spider","Daemon","Scorpion","Skeleton","Slime","WaterElemental","FireElemental"];
-const working=["Daemon","Skeleton","Ogre","Raider","GaronaGriselda"];
-// const working=["GaronaGriselda"];
+const working=["Daemon","Skeleton","Ogre","Raider","GaronaGriselda","Spider"];
+// const working=["Spider"];
 
 const Sound = require("./sound");
 
@@ -65,10 +65,10 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
         // skeleton sheet 640 * 187 
         // 20 columns
         this.sheetWidth = 480;
-        this.sheetHeight = 1157;
+        this.sheetHeight = 160;
 
-        this.cols = 5;
-        this.rows = 15;
+        this.cols = 15;
+        this.rows = 5;
 
         this.east = 2;
         this.north = 0;
@@ -101,8 +101,8 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
         this.south = 4; 
         this.west = 2; 
 
-        this.health = 500;
-        this.value = 400;
+        this.health = 200;
+        this.value = 150;
         this.damage = 100;
     }else if(this.sheetname === "Raider"){
         this.sheetWidth = 720;
@@ -116,8 +116,8 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
         this.south = 4; 
         this.west = 2; 
 
-        this.health = 500;
-        this.value = 400;
+        this.health = 125;
+        this.value = 200;
         this.damage = 100;
     }else if(this.sheetname === "GaronaGriselda"){
         // skeleton sheet 640 * 187 
