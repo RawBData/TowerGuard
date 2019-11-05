@@ -57,7 +57,7 @@ class Tower{
         let dy;;
         if (this.baddy){
             dx = this.location.x - this.baddy.center.x;
-            dy = this.location.y - this.baddy.center.y; 
+            dy = this.location.y - this.baddy.center.y-30; 
             this.target = this.baddy.center;
             this.enemyOrientationAngle = Math.atan2(dx,dy)-Math.PI;
 

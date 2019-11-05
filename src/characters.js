@@ -7,7 +7,8 @@ const humanUnits = ["Archer","Brigand","Catapult","Cleric","Conjurer","Peasant",
 const orcUnits = ["Necrolyte","Ogre","Grunt","Raider","Skeleton","Spearman","Medivh","Warlock","GaronaGriselda"];
 const allBad=["Spider","Daemon","Scorpion"];
 const conjured=["Spider","Daemon","Scorpion","Skeleton","Slime","WaterElemental","FireElemental"];
-const working=["Daemon","Skeleton"];
+const working=["Daemon","Skeleton","Ogre","Raider","GaronaGriselda"];
+// const working=["GaronaGriselda"];
 
 const Sound = require("./sound");
 
@@ -88,6 +89,46 @@ function Character(characterName, health, game, startX = -10, startY = 250, spee
         this.health = 500;
         this.value = 400;
         this.damage = 100;
+    }else if(this.sheetname === "Ogre"){
+        this.sheetWidth = 720;
+        this.sheetHeight = 240;
+
+        this.cols = 15;
+        this.rows = 5;
+
+        this.east = 2;
+        this.north = 0;
+        this.south = 4; 
+        this.west = 2; 
+
+        this.health = 500;
+        this.value = 400;
+        this.damage = 100;
+    }else if(this.sheetname === "Raider"){
+        this.sheetWidth = 720;
+        this.sheetHeight = 240;
+
+        this.cols = 15;
+        this.rows = 5;
+
+        this.east = 2;
+        this.north = 0;
+        this.south = 4; 
+        this.west = 2; 
+
+        this.health = 500;
+        this.value = 400;
+        this.damage = 100;
+    }else if(this.sheetname === "GaronaGriselda"){
+        // skeleton sheet 640 * 187 
+        // 20 columns
+        this.sheetWidth = 600;
+        this.sheetHeight = 150;
+        this.cols = 20;
+        this.rows = 5;  
+        this.health = 100;
+        this.value = 100;
+        this.damage = 25;
     }
 
     this.speed = Math.floor((Math.random()*5*speedMulty)+1);

@@ -258,7 +258,7 @@ class Game {
       console.log(this)
       this.style.backgroundColor = 'green';
       if (game.towerSelected === true) return;
-      if (game.getBank() > this.cost){
+      if (game.getBank() >= this.cost){
         console.log("bank was enough")
         game.createTower(this);
         game.towerSelected = true;
