@@ -2,6 +2,7 @@
   <head>
     <title>Tower Guard</title>
     <link rel="stylesheet" href="./game.css">
+    <link href="https://fonts.googleapis.com/css?family=Yeon+Sung&display=swap" rel="stylesheet">
     <!-- <script type="application/javascript" src="../src/index.js"></script> -->
     <script type="application/javascript" src="./main.js"></script>
   </head>
@@ -11,11 +12,19 @@
       <div id="game-modal" class="game-start-modal">
         <div>
           <h1 class="game-title">Tower Guard</h1>
-
         </div>
             <div class="game-options-container">
-              <div id="human" value="orcs" selected=true>Human</div>
-              <div id="orc" value="humans">Orc</div>
+              <div id="human" value="orcs" selected=true>                
+                <p>
+                  Protect your Castle<br>
+                  against the invading horde.<br> 
+                  Click and place towers on the map<br>
+                  Each Ghoul gives you<br>
+                  <b>health and coins</b><br>
+                  Use your coins wisely<br>
+                  For the Horde is relentless<br>
+                  And ever growing!<br>
+                </p>
               <div id="start-game">Start Game</div>
           </div>
         </div>
@@ -29,11 +38,17 @@
             <div class="menu-stats">
               <div id="playables"></div>
             </div>
-        </div>
+          </div>
         
-        <div id="stats"></div>
-        
-        <div id="developer">
+        <div id="bottom-game-panel">
+          <div id="developer">
+                    <img id="hire-image" src="../assets/personal_04.png" alt="git">
+                    
+                    <div><a href="https://github.com/RawBData">Github</a></div>
+                    <div><a href="">Portfolio</a></div>
+                    <div><a href="https://www.linkedin.com/in/benjaminrawner/">LinkedIn</a></div>
+          </div>
+          <div id="stats"></div>
         </div>
     
     </div> 

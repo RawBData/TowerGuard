@@ -4,13 +4,19 @@
 body{
     margin:0;
     background-image: radial-gradient(brown, green);
+    font-family: 'Yeon Sung', cursive;
 }
 
 canvas {
     border: 2px solid green;
     background-color: #5f9fb3;
     background-image: radial-gradient(brown, green);
+    cursor: url(../assets/fireball.png),pointer;
 }
+
+
+
+
 #whole-screen{
     display: flex;
     flex-direction: column;
@@ -20,11 +26,11 @@ canvas {
     z-index: 0;
     display: flex;
     flex-direction: row;
-    height: 100vh;
+    height: auto;
 }
 
 #canv{
-    
+    /* padding-right: 25px; */
 }
 
 #playables{
@@ -34,12 +40,19 @@ canvas {
     /* background-color: green; */
 }
 #stats{
-    background-color: brown;
     display: flex;
+    position: fixed;
+    right: 0;
 }
 
 .menu-stats{
     /* background-color: blue; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    right: 0;
+    top: 10%;
 }
 
 /* Modal Display*/
@@ -54,51 +67,124 @@ canvas {
     background-repeat: no-repeat;
     background-size: cover;
     position: absolute;
-    height: 80%;
-    width: 53%;
-    top: 10%;
-    left: 20%;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    left: 0%;
     padding-left: 15px;
 }
 
 .game-title{
-    color: red;
+    color: white;
     align-items: center;
     justify-content: center;
     font-size: 9vh;
-    
+    margin: 60px 0 0 20px;
 }
 
 .game-options-container{
-    color: white;
-    font-size: 8vh;
-    cursor: pointer;
-}
+    cursor: crosshair;
+    background-image: url(../assets/gameScroll.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 10%;
+}   
 
 
 #orc{
     padding-top: 6vh;
 }
 
+#human{
+    color:white;
+    width: 100%;
+}
+
+#human > p{
+    margin: 20px 0px 5px 10px;
+    font-size: .9em;
+}
+
+@media screen and (max-width: 600px) {
+    #human > p {
+        font-size: 16px;
+    }
+  }
+
 #start-game{
-    border-style: outset;
+    border-style: ridge;
     border-width: 5px;
     border-radius: 3px;
-    background-color: lightgrey;
-    color: green;
-    margin: 17vh 0px 0px 15vw;
+    border-color: brown;
+    color: black;
+    text-shadow: 1px 1px brown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    margin: 0% 0% 5% 30%;
+    cursor: url(../assets/fireball.png),pointer;
+}
+
+#start-game:hover{
+    
+}
+
+#bottom-game-panel{
+    display: flex;
+    justify-content: space-around;
+    width: 85%;
+}
+
+#developer{
+    color: white;
+    display: flex;
+    width: 26%;
+    justify-content: space-between;
+    cursor: pointer;
+    align-items: center;
+    position: fixed;
+    left: 0;
+}
+
+#hire-container{
+
+}
+
+#hire-links-container{
+
+}
+
+#hire-image{
+    height: 80px;
+    width: 90px;
 }
 
 .stats-divs{
-    color: firebrick;
-    border-style: inset;
+    color: wheat;
+    /* border-style: inset;
     border-width: 5px;
-    border-radius: 3px;
-    background-color: lightgrey;
+    border-radius: 3px; */
+
+
+    /* background-color: lightgrey; */
+
     font-weight: bolder;
+    font-size:25px;
+
     display: flex;
-    margin-bottom: 1vh;
+    justify-content: center;
+    align-items: center;
+    margin: 0 12px 0 0;
+    width: 141px;
+
+    background-image: url(../assets/gameScroll.png);
+    background-repeat: no-repeat;
+    background-size: cover; 
+
+
 }
+
 
 .costs-divs{
     color: firebrick;

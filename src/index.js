@@ -21,10 +21,8 @@ let enemyType = "orcs";
 
 
 
-
+//Buttons on the start screan, other le
 let chooseDestiny = function(){
-    document.getElementById('human').style.textDecoration="underline";
-    document.getElementById('human').style.color='red';
   // modal logic
   document.getElementById("start-game").addEventListener("click", function() {
     document.getElementById('game-modal').style.display='none';
@@ -33,21 +31,10 @@ let chooseDestiny = function(){
 
   document.getElementById("human").addEventListener("click", function() {
     enemyType = "orcs";
-    document.getElementById('orc').style.color='white';
-    document.getElementById('orc').style.textDecoration="none";
-    document.getElementById('human').style.color='red';
-    document.getElementById('human').style.textDecoration="underline";
+;
 
   });
 
-  document.getElementById("orc").addEventListener("click", function() {
-    enemyType = "humans";
-    document.getElementById('human').style.color='white';
-    document.getElementById('human').style.textDecoration="none";
-    document.getElementById('orc').style.color='red';
-    document.getElementById('orc').style.textDecoration="underline";
-
-  });
 
   
 
@@ -69,11 +56,11 @@ let animation = function(){
   now = Date.now();
   delta = now - then;
   
-  if (delta > interval) {
+  if (delta > interval && game.gameOn) {
     
     then = now - (delta % interval);
-      game.run();
-    }
+    game.run();
+  }
 }
 
 let mousePos = {x: -60, y: -60};
@@ -85,22 +72,25 @@ window.addEventListener('mousemove',(event)=>{
 
 class Game {
   constructor(baddiesType = "orcs"){
+    this.gameOn = true;
+
     this.tiles = []
     this.towers = [];
     this.baddies = [];
     this.projectiles = [];
     this.grid = []
-
+    
     
     //stats
     this.currentScore = 0;
     this.bank = 1000;
     this.score= 0;
-    this.currentHealth = 1000;
-    this.health = 1000;
+    this.currentHealth = 100;
+    this.health = 100;
     this.currWave = 0;
     this.baddiesDefeated = 0;
-
+    this.displayNeedCoins = false;
+    this.noCoinsFrames = 40;
 
 
     this.boardImg = new Image();
@@ -206,7 +196,16 @@ class Game {
                 // this.grid[col][row].render();
             }   
         }
-
+        
+      // console.log(this.noCoinsFrames)
+      if(this.displayNeedCoins){
+        console.log("displaying lack of coins")
+        ctx.font = "60px Yeon Sung";
+        ctx.fillStyle = "red";
+        ctx.textAlign = "center";
+        ctx.fillText("Need More Coins!", this.board.width/2, this.board.height/2); 
+        
+      }
         
   }
 
@@ -236,6 +235,7 @@ class Game {
 
     //Tower Display, Selection and Dropping
     setTowerFunctions(towerSelectorsArray){
+      let instance = this;
       towerSelectorsArray.forEach((tower, i)=>{
         tower.addEventListener('mouseover',this.selectorHoverOn, false)
         tower.addEventListener('mouseout',this.selectorHoverOff, false)
@@ -255,6 +255,7 @@ class Game {
       this.style.backgroundColor = 'Red';
     }
     selectorClick(){
+      console.log(this)
       this.style.backgroundColor = 'green';
       if (game.towerSelected === true) return;
       if (game.getBank() > this.cost){
@@ -262,7 +263,12 @@ class Game {
         game.createTower(this);
         game.towerSelected = true;
       }else{
+        game.displayNeedCoins = true;
         console.log("not enough cheddar")
+        // console.log(console.log(game))
+        setTimeout(()=>{
+          game.displayNeedCoins = false;
+        },1000);
       }
     }
 
@@ -304,6 +310,7 @@ class Game {
   
         tSelector.cost = 50*i*5+50;
         tSelector.id = "tSel"+i;
+        tSelector.style.cursor = "url(../assets/hammer.png),pointer";
         TowerSelectors.push(tSelector);
         let selectorImagePath= `../assets/sprites_towers/tower_against_${this.baddiesType}_0${i+1}.png`;
         let selectorImage = new Image();
@@ -411,7 +418,13 @@ class Game {
           break;
 
           case "bank":
-            stat.innerHTML = `Bank<br>${this.bank}`
+            if(game.displayNeedCoins){
+              stat.style.color = 'red';
+              stat.innerHTML = `Bank<br>${this.bank}`
+            }else{
+              stat.style.color = 'wheat';
+              stat.innerHTML = `Bank<br>${this.bank}`
+            }
           break;
 
           case "wave":
@@ -593,6 +606,7 @@ class Game {
   }
 
   gameOver(){
+    game.gameOn = false;
     console.log("in game over function")
     document.getElementById('game-on').style.display='none';
     document.getElementById('end-modal').style.display='block';
