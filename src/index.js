@@ -192,7 +192,7 @@ class Game {
         //The Path Grid only shown for testing purposes
         for (let col = 0; col < this.gridCols; col++) {
             for (let row = 0; row < this.gridRows; row++) {
-                //console.log(col,row);
+                // console.log(col,row);
                 // this.grid[col][row].render();
             }   
         }
@@ -308,7 +308,7 @@ class Game {
   
         document.getElementById("playables").append(tSelector)
   
-        tSelector.cost = 50*i*5+50;
+        tSelector.cost = 250*i*5+50;
         tSelector.id = "tSel"+i;
         tSelector.style.cursor = "url(../assets/hammer.png),pointer";
         TowerSelectors.push(tSelector);

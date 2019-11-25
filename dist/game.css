@@ -5,6 +5,7 @@ body{
     margin:0;
     background-image: radial-gradient(brown, green);
     font-family: 'Yeon Sung', cursive;
+    
 }
 
 canvas {
@@ -12,9 +13,22 @@ canvas {
     background-color: #5f9fb3;
     background-image: radial-gradient(brown, green);
     cursor: url(../assets/fireball.png),pointer;
+
+    /* position: absolute; */
+    top:0;
+    left:0;
+    width:100%;
+    /* height:100%; */
 }
 
+canvas-element {
+    background-color:pink;
+}
 
+/*
+    Game aspect ratio
+    125/68 1.85 680/1250 .544
+*/
 
 
 #whole-screen{
@@ -88,6 +102,8 @@ canvas {
     background-repeat: no-repeat;
     background-size: contain;
     padding: 10%;
+    position: absolute;
+    top: 20%
 }   
 
 
