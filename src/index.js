@@ -35,6 +35,16 @@ let chooseDestiny = function(){
 
   });
 
+  document.getElementById("sound-div").addEventListener("click", function() {
+    document.getElementById("sound-div").className = document.getElementById("sound-div").className === "sound-div-on"?
+    "sound-div-off"
+    :
+    "sound-div-on";
+    
+    // document.getElementById('game-modal').style.display='none';
+    // window.setTimeout(initialize, 100);
+  });
+
 
   
 
@@ -69,6 +79,7 @@ window.addEventListener('mousemove',(event)=>{
   mousePos.y = event.y;
   //console.log(mousePos)
 })
+
 
 class Game {
   constructor(baddiesType = "orcs"){
@@ -142,6 +153,20 @@ class Game {
 
   
   run(){
+    //sound conroll
+    if (document.getElementById('sound-div').className === 'sound-div-off'){
+      this.board.newSound.stop();
+      // this.board.newSound.play();
+    };
+
+    if (document.getElementById('sound-div').className === 'sound-div-on'){
+      // this.board.newSound.stop();
+
+      this.board.newSound.play();
+      // this.board.newSound.play();
+    };
+
+
     if(this.health < 1) this.gameOver();
     this.updateStats();
     this.render(this.ctx);
@@ -357,6 +382,12 @@ class Game {
     }
 
     createGameStats(){
+      //Sound toggle logic before stats display
+      // let soundToggle = document.createElement("div");
+      // soundToggle.className = "sound-div-on";
+      // document.getElementById("stats").append(soundToggle)
+
+      //stats display
       let GameStats = [];
       let statsTypesArr = ["health","bank","wave","enemiesLeft","total-killed"];
       let htmlInner;
@@ -395,6 +426,10 @@ class Game {
         statsHolder.append(statTitle)
         statsHolder.append(document.createElement("BR"))
         statsHolder.append(htmlInner)
+
+        let soundToggle = document.createElement("div");
+        statsHolder.className = "sound-div";
+
         // statsHolder.innerHTML = htmlInner;
         statsHolder.className = "stats-divs";
         statsHolder.id = statsTypesArr[i];
@@ -584,8 +619,10 @@ class Game {
 
   generateNextWave(){
     this.board.newSound.stop();
+    if (document.getElementById('sound-div').className === 'sound-div-on'){
+      this.board.newSound.play();
+    };
     // console.log(this.board.newSound)
-    this.board.newSound.play();
 
     for (let i = 0; i < this.waveAmount; i++) {
         let newX = 0;

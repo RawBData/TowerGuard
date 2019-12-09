@@ -217,3 +217,23 @@ canvas-element {
     display:none;
 }
 
+
+.sound-div-on{
+    background-image: url(../assets/sound_on.png);
+    /* background-color: #cccccc; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+    height: 4em;
+    width: 4em;
+}
+
+.sound-div-off{
+    background-image: url(../assets/sound_off.png);
+    /* background-color: #cccccc; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+    height: 4em;
+    width: 4em;
+}
