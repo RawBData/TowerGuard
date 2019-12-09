@@ -6,7 +6,6 @@ const Projectile = require('./projectile');
 const Sound = require('./sound');
 
 let game;
-//
 let fps = 20;
 let now;
 let then = Date.now();
@@ -18,7 +17,8 @@ let enemyType = "orcs";
 
 
 
-
+//
+let testVar = 5;
 
 
 //Buttons on the start screan, other le
