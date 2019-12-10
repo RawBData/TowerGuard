@@ -16,11 +16,6 @@ let startGame = false;
 let enemyType = "orcs";
 
 
-
-//
-let testVar = 5;
-
-
 //Buttons on the start screan, other le
 let chooseDestiny = function(){
   // modal logic
@@ -31,8 +26,6 @@ let chooseDestiny = function(){
 
   document.getElementById("human").addEventListener("click", function() {
     enemyType = "orcs";
-;
-
   });
 
   document.getElementById("sound-div").addEventListener("click", function() {
@@ -40,15 +33,9 @@ let chooseDestiny = function(){
     "sound-div-off"
     :
     "sound-div-on";
-    
-    // document.getElementById('game-modal').style.display='none';
-    // window.setTimeout(initialize, 100);
   });
 
-
   
-
-
 }
 
 let initialize = function(){
@@ -84,6 +71,7 @@ window.addEventListener('mousemove',(event)=>{
 class Game {
   constructor(baddiesType = "orcs"){
     this.gameOn = true;
+    this.soundFX = true;
 
     this.tiles = []
     this.towers = [];
@@ -118,7 +106,7 @@ class Game {
     this.towerSelected = false;
     this.towerSelectors = this.createTowerSelectors();
     this.setTowerFunctions(this.towerSelectors);
-    this.createGameStats();
+    this.createGameStats(this);
 
     window.game = this;
 
@@ -175,9 +163,6 @@ class Game {
       this.endOfRoundLogic();
       //console.log(this.bank);
     }
-    if (this.health < 1){
-      console.log("Game Over")
-    }
   }
 
   
@@ -224,7 +209,6 @@ class Game {
         
       // console.log(this.noCoinsFrames)
       if(this.displayNeedCoins){
-        console.log("displaying lack of coins")
         ctx.font = "60px Yeon Sung";
         ctx.fillStyle = "red";
         ctx.textAlign = "center";
@@ -280,16 +264,13 @@ class Game {
       this.style.backgroundColor = 'Red';
     }
     selectorClick(){
-      console.log(this)
       this.style.backgroundColor = 'green';
       if (game.towerSelected === true) return;
       if (game.getBank() >= this.cost){
-        console.log("bank was enough")
         game.createTower(this);
         game.towerSelected = true;
       }else{
         game.displayNeedCoins = true;
-        console.log("not enough cheddar")
         // console.log(console.log(game))
         setTimeout(()=>{
           game.displayNeedCoins = false;
@@ -303,7 +284,6 @@ class Game {
       
       let tower = new Tower(selector.cost, selector.tImage, selector.bImage, game);
       if (tower){
-        console.log(tower);
         this.towers.push(tower);
       } else {
         console.log("there was a problem with tower")
@@ -313,7 +293,6 @@ class Game {
 
 
     createTowerSelectors(){
-      console.log("in index.js")
       let TowerSelectors = [];
       for (let i = 0; i < 5; i++) {
         let tSelector = document.createElement("div");
@@ -381,11 +360,37 @@ class Game {
       return TowerSelectors;
     }
 
-    createGameStats(){
+    createGameStats(game){
       //Sound toggle logic before stats display
-      // let soundToggle = document.createElement("div");
-      // soundToggle.className = "sound-div-on";
-      // document.getElementById("stats").append(soundToggle)
+      let fxToggle = document.createElement("div");
+      fxToggle.id = "fx-div";
+      fxToggle.className = "fx-div-on";
+      document.getElementById("stats").append(fxToggle)
+
+
+      document.getElementById("fx-div").addEventListener("click", function() {
+        // if (document.getElementById("fx-div").className === "fx-div-on"){
+        //   document.getElementById("fx-div").className = "fx-div-off";
+        //   console.log(game);
+        // }else{
+        //   document.getElementById("fx-div").className = "fx-div-on";
+        // }
+        
+        
+        
+        
+        
+        document.getElementById("fx-div").className = document.getElementById("fx-div").className === "fx-div-on"?
+        "fx-div-off"
+        :
+        "fx-div-on";
+
+        game.soundFX = !game.soundFX;
+        
+        // document.getElementById('game-modal').style.display='none';
+        // window.setTimeout(initialize, 100);
+      });
+
 
       //stats display
       let GameStats = [];
@@ -644,7 +649,6 @@ class Game {
 
   gameOver(){
     game.gameOn = false;
-    console.log("in game over function")
     document.getElementById('game-on').style.display='none';
     document.getElementById('end-modal').style.display='block';
   }

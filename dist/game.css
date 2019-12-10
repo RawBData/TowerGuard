@@ -101,7 +101,7 @@ canvas-element {
     background-image: url(../assets/gameScroll.png);
     background-repeat: no-repeat;
     background-size: contain;
-    padding: 10%;
+    padding: 10% 10% 10% 8%;
     position: absolute;
     top: 20%
 }   
@@ -138,7 +138,7 @@ canvas-element {
     justify-content: center;
     align-items: center;
     width: 50%;
-    margin: 0% 0% 5% 30%;
+    margin: 0% 0% 5% 23%;
     cursor: url(../assets/fireball.png),pointer;
 }
 
@@ -219,8 +219,27 @@ canvas-element {
 
 
 .sound-div-on{
+    background-image: url(../assets/music_on.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    height: 3em;
+    width: 3em;
+    margin: .33em 0 0 0;
+}
+
+.sound-div-off{
+    background-image: url(../assets/music_off.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    height: 3em;
+    width: 3em;
+    margin: .33em 0 0 0;
+}
+
+.fx-div-on{
     background-image: url(../assets/sound_on.png);
-    /* background-color: #cccccc; */
     background-repeat: no-repeat;
     background-size: cover;
     cursor: pointer;
@@ -228,7 +247,7 @@ canvas-element {
     width: 4em;
 }
 
-.sound-div-off{
+.fx-div-off{
     background-image: url(../assets/sound_off.png);
     /* background-color: #cccccc; */
     background-repeat: no-repeat;
@@ -237,3 +256,57 @@ canvas-element {
     height: 4em;
     width: 4em;
 }
+
+.play-again-button{
+    border-style: ridge;
+    border-width: 5px;
+    border-radius: 3px;
+    border-color: brown;
+    color: black;
+    text-shadow: 1px 1px brown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0% 0% 0% 0%;
+    cursor: url(../assets/fireball.png),pointer;
+    text-decoration: none;
+}
+
+.play-again-button h1{
+    margin: 0 0 0 0;
+}
+
+.play-again-link{
+    cursor: url(../assets/fireball.png),pointer;
+}
+
+/* unvisited link */
+.play-again-link:link {
+    color: black;
+    text-shadow: 1px 1px brown;
+    text-decoration: none;
+  }
+  
+  /* visited link */
+  .play-again-link:visited {
+    color: black;
+    text-shadow: 1px 1px brown;
+    text-decoration: none;
+
+  }
+  
+  /* mouse over link */
+  .play-again-link:hover {
+    color: black;
+    text-shadow: 1px 1px brown;
+    text-decoration: none;
+
+  }
+  
+  /* selected link */
+  .play-again-link:active {
+    color: black;
+    text-shadow: 1px 1px brown;
+    text-decoration: none;
+
+  }

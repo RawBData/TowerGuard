@@ -64,7 +64,7 @@ class Tower{
             let distanceToTarget = Math.sqrt( Math.pow(dx, 2) + Math.pow(dy, 2) );
             
             if (Date.now()-this.reloadTime > this.lastFired && distanceToTarget <= this.firingRange && this.placed){
-                this.shootSound.play();
+                if (this.game.soundFX) this.shootSound.play();
                 this.shoot();
                 this.lastFired = Date.now();
             }

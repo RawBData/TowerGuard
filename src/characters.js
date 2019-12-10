@@ -14,7 +14,7 @@ const Sound = require("./sound");
 
 
 function Character(characterName, health, game, startX = -10, startY = 250, speedMulty = 1, radius = 25) {
-    //this.sheetname = 'Daemon.png'
+    //this.sheetname = 'Daemon.png';
     this.sheetname = working[Math.floor(Math.random()*working.length)];
     //console.log(this.sheetname);
     this.board = game;
@@ -279,8 +279,8 @@ Character.prototype.characterDead = function(){
         //console.log(this.board.health);
     }
     if (this.health < 1){
-        //console.log("Character was blasted off of screen")
-        this.dyingSound.play();
+        // console.log("screen", this.board)
+        if (this.board.soundFX) this.dyingSound.play();
         this.board.bank += this.value;
         this.board.health += 10;
         this.board.currentScore += 10;
