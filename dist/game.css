@@ -308,5 +308,8 @@ canvas-element {
     color: black;
     text-shadow: 1px 1px brown;
     text-decoration: none;
+  }
 
+  .special-text{
+      color:red;
   }
