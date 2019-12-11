@@ -15,6 +15,7 @@ let soundTrack;
 let startGame = false;
 let enemyType = "orcs";
 
+// document.body.style.zoom = "100%";
 
 //Buttons on the start screan, other le
 let chooseDestiny = function(){
@@ -116,6 +117,7 @@ class Game {
     }
     this.board.width = 1200;
     this.board.height = 600;
+    console.log(window.innerWidth);
     document.getElementById("canv").appendChild(this.board);
 
     // this.board.soundTrack = new Sound('../assets/soundTrack.mp3');
@@ -315,11 +317,13 @@ class Game {
         tSelector.cost = 250*i*5+50;
         tSelector.id = "tSel"+i;
         tSelector.style.cursor = "url(../assets/hammer.png),pointer";
+        tSelector.className = "tower-selector"
         TowerSelectors.push(tSelector);
         let selectorImagePath= `../assets/sprites_towers/tower_against_${this.baddiesType}_0${i+1}.png`;
         let selectorImage = new Image();
         selectorImage.addEventListener('error', ()=>{console.log("fail selector");}, false);
         selectorImage.src = selectorImagePath;
+        // selectorImage.className = "tower-selector-images";
 
         tSelector.appendChild(selectorImage);
 

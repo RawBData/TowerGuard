@@ -41,6 +41,7 @@ canvas-element {
     display: flex;
     flex-direction: row;
     height: auto;
+    justify-content: center;
 }
 
 #canv{
@@ -50,9 +51,15 @@ canvas-element {
 #playables{
     display: flex;
     flex-direction: column;
+    margin: 0 0 0 7px;
     /* height: 100vh; */
     /* background-color: green; */
 }
+
+.tower-selector{
+    margin: 0 0 20px 0;
+}
+
 #stats{
     display: flex;
     position: fixed;
@@ -64,9 +71,9 @@ canvas-element {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
+    /* position: fixed;
     right: 0;
-    top: 10%;
+    top: 10%; */
 }
 
 /* Modal Display*/
@@ -211,6 +218,10 @@ canvas-element {
     font-weight: bolder;
     display: flex;
     margin-bottom: 1vh;
+}
+
+.tower-selector-images{
+    background-color: white;
 }
 
 #end-modal{
