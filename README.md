@@ -4,7 +4,7 @@
 
 # Trivialand
 
-_A multi-player online trivia game._
+_A Javascript Tower Defense Game._
 
 Checkout out Tower Guard [Here](https://rawbdata.github.io/TowerGuard/dist/ "Tower Guard")
 
@@ -14,14 +14,14 @@ Checkout out Tower Guard [Here](https://rawbdata.github.io/TowerGuard/dist/ "Tow
 ## Background and Overview
 ***
 
-Tower Guard is a JavaScript game using original Warcraft sprites with the an orignal tower defense design and implementaion. 
+Tower Guard is a JavaScript game using Warcraft sprites with the an original tower defense design and implementation. 
 
 
 - Realtime: over 10 different sprite characters with up to 1000 individual renders.
 
-- Seamless: Towers's cost, placement, animation and tracking are optimized to ensure smooth gameplay
+- Seamless: Towers's cost, placement, tracking and animation are optimized to ensure smooth gameplay
 
-- Collision Detection: Circular collision detection of projectiles and enemies works even if projeciles miss one character but intersect anothr.
+- Collision Detection: Circular collision detection of projectiles and enemies works even if projeciles miss one character but intersect another.
 
 
 Towerguard is built using Pure DOM manipulation to showcase a fundamental understaning of the DOM, HTML and JavaScript.
@@ -48,7 +48,7 @@ Towerguard is built using Pure DOM manipulation to showcase a fundamental unders
 ***
 ## Challenges
 The most challenging aspects of this game are:
-- [] Pathfind algorithms and sprite directions derived from this algorithm
+- [] Pathfind algorithm and sprite directions derived from this algorithm
 - [] Smooth sprite animation from different sizes of sprite sheets
 - [] Collision detection and removal of enemies and projectiles
 ***
@@ -66,8 +66,6 @@ The overall architecture is summarized in the diagram below:
 ***
 
 The goal is to create a unique player experience that is intuitive to use and quick to pick up. Enemy waves are increased by a certain percentage at every wave. Each enemy removed from the board gives the player more health and more coins to buy more towers. The players health decreases everytime an enemy makes it to the home castle. The game ends when the players runs out of health.
-
-The app will have splash page with a sign up and login. Once logged in players can either create lobby or join using a unique key. Also players can see live lobbies. Players can watch any ongoing game, without being able to join. The users show page contains details regarding their stats and potential unlocks. Lobby leaderboard to see other individual stats to measure against.
 
 
 
