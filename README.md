@@ -145,8 +145,21 @@ The overall architecture is summarized in the diagram below:
 ## UI/UX
 ***
 
-The goal is to create a unique player experience that is intuitive to use and quick to pick up. Enemy waves are increased by a certain percentage at every wave. Each enemy removed from the board gives the player more health and more coins to buy more towers. The players health decreases everytime an enemy makes it to the home castle. The game ends when the players runs out of health.
+The goal is to create a unique player experience that is intuitive to use and quick to pick up. Enemy waves are increased by a certain percentage at every wave. Each enemy removed from the board gives the player more health and more coins to buy more towers. The players health decreases everytime an enemy makes it to the home castle. 
 
+Players can click choose from a variety of tower to click place the towers on the board. Enemies will always take the shortest path no matter what is in their way.
 
+The game ends when the players runs out of health.
+
+***
+## Overall Project Experience
+***
+
+This project was alot of fun to do because of the game animation aspect of sprites, rendering and timing. With the complexity of the pathfinding algorithm and use of the cardinal directions, it was a challenge to align the enemies while at the same time animating them. I learned alot of about collision detection as well and how to effectively remove dead objects from the screen.
+***
+## Creator
+***
+
+Benjamin Rawner
 
 
