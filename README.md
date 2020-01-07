@@ -1,12 +1,9 @@
 # Tower Guard
 
 
-
-# Trivialand
-
 _A Javascript Tower Defense Game._
 
-Checkout out Tower Guard [Here](https://rawbdata.github.io/TowerGuard/dist/ "Tower Guard")
+[Tower Guard Live](https://rawbdata.github.io/TowerGuard/dist/ "Tower Guard")
 
 ![Splash](./docs/towerguard.gif)
 
@@ -28,13 +25,88 @@ Towerguard is built using Pure DOM manipulation to showcase a fundamental unders
 
 
 ***
-## Functionality & MVP
+## Functionality
 ***
 
 - [ ] Users can choose towers and place them on the board
+
+    ```javascript
+     let tSelector = document.createElement("div");
+        let tSelectedImgPath = `../assets/sprites_towers/tower_against_${this.baddiesType}_0${i+1}.png`;
+        let tSelectedBulletImgPath = `../assets/sprites_bullets/B${i+1}.png`;
+  
+  
+        tSelector.tImage = new Image();
+        tSelector.tImage.addEventListener('load',this.hideImgElement,false);
+        tSelector.tImage.addEventListener('error', ()=>{console.log("fail tower");}, false);
+        tSelector.tImage.src = tSelectedImgPath;
+  
+        tSelector.bImage = new Image();
+        tSelector.bImage.addEventListener('load',this.hideImgElement,false);
+        tSelector.bImage.addEventListener('error', ()=>{console.log("fail bullet");}, false);
+        tSelector.bImage.src = tSelectedBulletImgPath;
+
+    ```
 - [ ] Game keeps track of enemies killed, current bank, health and the wave number
+
+    ```javascript
+        for (let i = 0; i < 5; i++) {
+                switch (statsTypesArr[i]) {
+                case "health": 
+                statTitle = document.createTextNode("Health");
+                htmlInner = this.health;
+                break;
+
+                case "bank":
+                    statTitle = document.createTextNode("Bank");
+                    htmlInner = this.bank;
+                break;
+
+                case "wave":
+                    statTitle = document.createTextNode("Wave");
+                    htmlInner = this.currWave;
+                break;
+
+                case "enemiesLeft":
+                    statTitle = document.createTextNode("Enemies");
+                    htmlInner = this.baddies.length;
+                break;
+
+                case "total-killed":
+                    statTitle = document.createTextNode("Dead");
+                    htmlInner = this.baddiesDefeated;
+                break;
+                
+                default:
+                break;
+                }
+    ```
 - [ ] Enemies are generated and animated randomly on the left side of the board
 - [ ] Enemies use a pathfinding algorithm to direct themselves throughout the board to get to home castle
+    ```javascript
+            createPaths(){
+        //I will be using the brushfire design with end goal in mind
+        let checkFifo = [this.home];
+        while (checkFifo.length > 0){
+            let currentCell = checkFifo.shift();
+            currentCell.neighbors.forEach(flanders => {
+                if (flanders.pathScore === -1){
+                    checkFifo.push(flanders); 
+                    flanders.pathScore = currentCell.pathScore+30;
+                }
+            })
+        }
+
+
+        for (let col = 0; col < this.gridCols; col++) {
+            for (let row = 0; row < this.gridRows; row++) {
+                if(!this.grid[col][row].wall){
+                    this.grid[col][row].getLeastNeighborPath();
+                }
+            }   
+        }
+    }
+    ```
 - [ ] Towers track and attack enemies with animated projectiles
 - [ ] Collision detection lowers the health of enemies until they are removed from the board or the enemy reach the home castle
 
@@ -42,6 +114,14 @@ Towerguard is built using Pure DOM manipulation to showcase a fundamental unders
 ### Bonus Features
 
 - [ ] Option to toggle sound effects and/or music
+    ```javascript
+        document.getElementById("sound-div").addEventListener("click",      function() {
+                document.getElementById("sound-div").className = document.getElementById("sound-div").className === "sound-div-on"?
+                "sound-div-off"
+                :
+                "sound-div-on";
+        });
+    ```
 - [ ] Over 10 different enemy sprites that are timed and curated specifically for this game
 
 
