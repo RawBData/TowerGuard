@@ -116,6 +116,8 @@ class Game {
     }
     this.board.width = 1200;
     this.board.height = 600;
+
+    
     document.getElementById("canv").appendChild(this.board);
 
     // this.board.soundTrack = new Sound('../assets/soundTrack.mp3');
