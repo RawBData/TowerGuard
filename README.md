@@ -111,6 +111,7 @@ Towerguard is built using Pure DOM manipulation to showcase a fundamental unders
     ```
 - [ ] Towers track and attack enemies with animated projectiles
 - [ ] Collision detection lowers the health of enemies until they are removed from the board or the enemy reach the home castle
+
 ![Splash](./docs/tower_tracking.gif)
 
 
@@ -126,7 +127,7 @@ Towerguard is built using Pure DOM manipulation to showcase a fundamental unders
         });
     ```
     ![Splash](./docs/sound_toggle.gif)
-    
+
 - [ ] Over 10 different enemy sprites that are timed and curated specifically for this game
 ![Splash](./docs/towerguard.gif)
 
