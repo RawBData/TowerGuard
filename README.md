@@ -47,6 +47,7 @@ Towerguard is built using Pure DOM manipulation to showcase a fundamental unders
         tSelector.bImage.src = tSelectedBulletImgPath;
 
     ```
+    ![Splash](./docs/tower_select.gif)
 - [ ] Game keeps track of enemies killed, current bank, health and the wave number
 
     ```javascript
@@ -81,6 +82,7 @@ Towerguard is built using Pure DOM manipulation to showcase a fundamental unders
                 break;
                 }
     ```
+    ![Splash](./docs/scoring.gif)
 - [ ] Enemies are generated and animated randomly on the left side of the board
 - [ ] Enemies use a pathfinding algorithm to direct themselves throughout the board to get to home castle
     ```javascript
@@ -109,6 +111,7 @@ Towerguard is built using Pure DOM manipulation to showcase a fundamental unders
     ```
 - [ ] Towers track and attack enemies with animated projectiles
 - [ ] Collision detection lowers the health of enemies until they are removed from the board or the enemy reach the home castle
+![Splash](./docs/tower_tracking.gif)
 
 
 ### Bonus Features
@@ -122,7 +125,10 @@ Towerguard is built using Pure DOM manipulation to showcase a fundamental unders
                 "sound-div-on";
         });
     ```
+    ![Splash](./docs/sound_toggle.gif)
+    
 - [ ] Over 10 different enemy sprites that are timed and curated specifically for this game
+![Splash](./docs/towerguard.gif)
 
 
 ***
