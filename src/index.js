@@ -85,7 +85,7 @@ class Game {
     this.bank = 1000;
     this.score= 0;
     this.currentHealth = 100;
-    this.health = 100;
+    this.health = 150;
     this.currWave = 0;
     this.baddiesDefeated = 0;
     this.displayNeedCoins = false;
@@ -117,7 +117,7 @@ class Game {
     this.board.width = 1200;
     this.board.height = 600;
 
-    
+
     document.getElementById("canv").appendChild(this.board);
 
     // this.board.soundTrack = new Sound('../assets/soundTrack.mp3');
@@ -143,7 +143,7 @@ class Game {
 
   
   run(){
-    //sound conroll
+    //sound conrol
     if (document.getElementById('sound-div').className === 'sound-div-off'){
       this.board.newSound.stop();
       // this.board.newSound.play();
