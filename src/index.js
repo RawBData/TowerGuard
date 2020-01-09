@@ -65,7 +65,6 @@ let mousePos = {x: -60, y: -60};
 window.addEventListener('mousemove',(event)=>{
   mousePos.x = event.x;
   mousePos.y = event.y;
-  //console.log(mousePos)
 })
 
 
@@ -117,7 +116,6 @@ class Game {
     }
     this.board.width = 1200;
     this.board.height = 600;
-    console.log(window.innerWidth);
     document.getElementById("canv").appendChild(this.board);
 
     // this.board.soundTrack = new Sound('../assets/soundTrack.mp3');
@@ -163,7 +161,6 @@ class Game {
     this.collisionDetection();
     if (this.baddies.length<1){
       this.endOfRoundLogic();
-      //console.log(this.bank);
     }
   }
 
@@ -179,7 +176,6 @@ class Game {
         //Put Baddies on the board
         for (let i = 0; i < this.baddies.length; i++) {
           const baddy= this.baddies[i];
-          //console.log(baddy);
           baddy.draw(this)
           
         }
@@ -187,7 +183,6 @@ class Game {
         //Put towers on the board
         for (let t = 0; t < this.towers.length; t++) {
           const tower = this.towers[t];
-          //console.log(baddy);
           tower.run(this);
           
         }
@@ -195,7 +190,6 @@ class Game {
         //Put projectiles on the board
         for (let p = 0; p < this.projectiles.length; p++) {
           const projectile = this.projectiles[p];
-          //console.log(baddy);
           projectile.run(this);
           
         }
@@ -204,12 +198,10 @@ class Game {
         //The Path Grid only shown for testing purposes
         for (let col = 0; col < this.gridCols; col++) {
             for (let row = 0; row < this.gridRows; row++) {
-                // console.log(col,row);
                 // this.grid[col][row].render();
             }   
         }
         
-      // console.log(this.noCoinsFrames)
       if(this.displayNeedCoins){
         ctx.font = "60px Yeon Sung";
         ctx.fillStyle = "red";
@@ -273,7 +265,6 @@ class Game {
         game.towerSelected = true;
       }else{
         game.displayNeedCoins = true;
-        // console.log(console.log(game))
         setTimeout(()=>{
           game.displayNeedCoins = false;
         },1000);
@@ -375,7 +366,6 @@ class Game {
       document.getElementById("fx-div").addEventListener("click", function() {
         // if (document.getElementById("fx-div").className === "fx-div-on"){
         //   document.getElementById("fx-div").className = "fx-div-off";
-        //   console.log(game);
         // }else{
         //   document.getElementById("fx-div").className = "fx-div-on";
         // }
@@ -445,8 +435,6 @@ class Game {
         document.getElementById("stats").append(statsHolder)
       
       }
-      // this.updateStats();
-      // console.log("done creating stats divs")
       return GameStats;
     }
 
@@ -455,7 +443,6 @@ class Game {
       let statsDivs = document.getElementById('stats').getElementsByClassName('stats-divs');
       for (let i = 0; i < statsDivs.length; i++) {
         const stat = statsDivs[i];
-        // console.log(statsDivs)
         switch (stat.id) {
           case "health":
             stat.innerHTML = `Health<br>${this.health}`
@@ -509,11 +496,9 @@ class Game {
     }
   
     handleBoardMouseClick(event){
-      //console.log(event);
       let row = Math.floor(event.offsetY/game.cellWidth);
       let col = Math.floor(event.offsetX/game.cellWidth);
       let node = game.grid[col][row];
-      // console.log(node)
       
       if(game.towerSelected && game.nodeAvailable(node)){
         game.putTower(node);
@@ -551,8 +536,6 @@ class Game {
 
 
     putTower(node){
-      // console.log("Testing");
-      // console.log(node)
         game.towers[game.towers.length-1].location = {
           x: ((node.j*this.cellWidth)+this.cellWidth/2),
           y: ((node.i*this.cellWidth)+this.cellWidth/2)
@@ -578,7 +561,6 @@ class Game {
 
       for (let col = 0; col < this.gridCols; col++) {
             for (let row = 0; row < this.gridRows; row++) {
-                //console.log(col,row);
                 this.grid[col][row].addNeighbors();
             }   
         }
@@ -611,7 +593,6 @@ class Game {
 
         for (let col = 0; col < this.gridCols; col++) {
             for (let row = 0; row < this.gridRows; row++) {
-                //console.log(col,row);
                 if(!this.grid[col][row].wall){
                     this.grid[col][row].getLeastNeighborPath();
                 }
@@ -631,14 +612,12 @@ class Game {
     if (document.getElementById('sound-div').className === 'sound-div-on'){
       this.board.newSound.play();
     };
-    // console.log(this.board.newSound)
 
     for (let i = 0; i < this.waveAmount; i++) {
         let newX = 0;
         let newY = Math.floor(Math.random()*600);
       let newBaddy = new Character(0,0,this,newX, newY);
       this.baddies.push(newBaddy);
-      // this.board.soundTrack.play();
     }
   }
   
@@ -661,5 +640,4 @@ class Game {
 }
 
 
-// window.addEventListener('load', initialize, false);
 window.addEventListener('load', chooseDestiny, false);
