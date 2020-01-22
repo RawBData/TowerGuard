@@ -327,29 +327,8 @@ class Game {
         tCostDiv.append(tCost);
 
 
-
-        
-        // statsHolder.append(document.createElement("BR"))
-        // statsHolder.append(htmlInner)
-        // statsHolder.innerHTML = htmlInner;
-        // statsHolder.className = "stats-divs";
-        // statsHolder.id = statsTypesArr[i];
-        // document.getElementById("stats").append(statsHolder)
-
-
-
-        // myimg.insertAdjacentHTML("afterend", "This is my caption.");
-        
-        
-        // document.createElement("div");
-        // tCost.innerHTML = "100";
-        
-        
-        
-
         document.getElementById(`${tSelector.id}`).appendChild(tCostDiv); 
 
-        //tSelector.append(tCostDiv);
         
       }
   
@@ -366,15 +345,6 @@ class Game {
 
 
       document.getElementById("fx-div").addEventListener("click", function() {
-        // if (document.getElementById("fx-div").className === "fx-div-on"){
-        //   document.getElementById("fx-div").className = "fx-div-off";
-        // }else{
-        //   document.getElementById("fx-div").className = "fx-div-on";
-        // }
-        
-        
-        
-        
         
         document.getElementById("fx-div").className = document.getElementById("fx-div").className === "fx-div-on"?
         "fx-div-off"
@@ -383,8 +353,6 @@ class Game {
 
         game.soundFX = !game.soundFX;
         
-        // document.getElementById('game-modal').style.display='none';
-        // window.setTimeout(initialize, 100);
       });
 
 
