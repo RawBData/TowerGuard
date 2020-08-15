@@ -200,7 +200,7 @@ class Game {
         //The Path Grid only shown for testing purposes
         for (let col = 0; col < this.gridCols; col++) {
             for (let row = 0; row < this.gridRows; row++) {
-                // this.grid[col][row].render();
+                this.grid[col][row].render();
             }   
         }
         
